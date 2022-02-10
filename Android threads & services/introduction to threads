@@ -114,5 +114,6 @@ Diagram:
 | |_______________| |
 |_________________|
 ----------------------------------------------------------
-ਪਰ je ਉਹ main activity (ਜਿਸਤੇ ਆਪਾ data send ਕੀਤਾ) ਉਹ destroy ਹੋ ਗਈ ਹੋਵੇ(ਇੱਥੇ ਆਪਾ definately ਇੱਕ ਐਸੀ ਚੀਜ਼ ਨੂੰ refer ਕਰ ਰਹੇ ਹਾ ਜਾ ਐਸੀ activity ਦਾ method call ਕਰ ਰਹੇ ਹਾ ਜੋ exist ਹੀ ਨਹੀ ਕਰ ਰਹੀ, ਇਸ ਨਾਲ ਤਾਂ Application crash ਹੋਜੂ। ਜੇ ਆਪਾ WorkRecords ਦਾ use ਕਰਾਗੇ ਤਾਂ je ਆਪਣੀ activity ਦਾ reference update ਵੀ ਹੋਇਆ ਹੋਏਗਾ ਤਾਂ bcz ਆਪਾ callback ਦੇ through ਆਪਾ send ਕਰ ਰਹੇ ਹੋਵਾਂਗੇ ਤਾਂ ਓਦੋ ਆਪਣੀ activity ਇਹ ਦੇਖੂਗੀ ਜਿੱਸ view ਨੂੰ refer ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ ਅਗਰ ਉਹ ਮੇਰੇ ਕੋਲ ਹੈ ਤਾਂ ਉਸਨੂੰ update ਕਰੋ ਨਹੀਂ ਤਾਂ discard ਕਰੋ, ਮਤਲਬ ਆਪਾ safely ਕੰਮ ਕਰ ਰਹੇ ਹਾਂ ਇਸ ਨਾਲ crash ਨਹੀ ਹੋਣਗੇ।
+ਪਰ je ਉਹ main activity (ਜਿਸਤੇ ਆਪਾ data send ਕੀਤਾ) ਉਹ destroy ਹੋ ਗਈ ਹੋਵੇ(ਇੱਥੇ ਆਪਾ definately ਇੱਕ ਐਸੀ ਚੀਜ਼ ਨੂੰ refer ਕਰ ਰਹੇ ਹਾ ਜਾ ਐਸੀ activity ਦਾ method call ਕਰ ਰਹੇ ਹਾ ਜੋ exist ਹੀ ਨਹੀ ਕਰ ਰਹੀ, ਇਸ ਨਾਲ ਤਾਂ Application crash ਹੋਜੂ। ਜੇ ਆਪਾ WorkRecords ਦਾ use ਕਰਾਗੇ ਤਾਂ je ਆਪਣੀ activity ਦਾ reference 
+update ਵੀ ਹੋਇਆ ਹੋਏਗਾ ਤਾਂ bcz ਆਪਾ callback ਦੇ through ਆਪਾ send ਕਰ ਰਹੇ ਹੋਵਾਂਗੇ ਤਾਂ ਓਦੋ ਆਪਣੀ activity ਇਹ ਦੇਖੂਗੀ ਜਿੱਸ view ਨੂੰ refer ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ ਅਗਰ ਉਹ ਮੇਰੇ ਕੋਲ ਹੈ ਤਾਂ ਉਸਨੂੰ update ਕਰੋ ਨਹੀਂ ਤਾਂ discard ਕਰੋ, ਮਤਲਬ ਆਪਾ safely ਕੰਮ ਕਰ ਰਹੇ ਹਾਂ ਇਸ ਨਾਲ crash ਨਹੀ ਹੋਣਗੇ।
 ---------------------------------------------------------
