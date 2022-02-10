@@ -1,0 +1,9 @@
+OnClickListener 
+1)ਇਹ ਇੱਕ interface ਹੈ ਜਿਸਨੂੰ ਆਪਾ implement ਕਰਦੇ ਹਾ, ਤੇ ਇਸਨੂੰ view ਤੇ set ਕਰਦੇ ਹਾ java code ਵਿੱਚ।
+2) ਇਹ ਕਿਸੇ ਦੇ ਅਸਲ ਵਿੱਚ click ਕਰਨ ਦੀ wait ਕਰਦਾ ਹੈ, onClick ਇਹ ਨਿਰਧਾਰਤ ਕਰਦਾ ਹੈ ਕਿ ਜਦੋਂ ਕੋਈ click ਕਰਦਾ ਹੈ ਤਾਂ ਕੀ ਹੁੰਦਾ ਹੈ।
+Lately android added a xml attribute to views called android:onclick, that can be used to 
+handle clicks directly in the view's activity without need to implement any interface.
+3) ਹਾਲ ਹੀ ਵਿੱਚ android ਨੇ android:onclick ਨਾਮ ਦਾ views ਵਿੱਚ ਇੱਕ xml attribute ਸ਼ਾਮਲ ਕੀਤੀ ਹੈ, ਜਿਸਦੀ ਵਰਤੋਂ ਨਾਲ
+ਕਿਸੇ ਵੀ interface ਨੂੰ implement ਕਰਨ ਤੋ ਬਿਨਾ view directly handle ਕਰ ਸਕਦੇ ਹਾਂ view activity ਵਿੱਚ।
+4)ਜੇਕਰ ਆਪਾ ਚਾਹੀਏ ਤਾਂ ਆਪਾ easily ਇੱਕ listener ਦੀ implement ਦੂਜੇ ਵਿੱਚ ਬਦਲ ਸਕਦੇ ਹਾ।
+REFERENCE:https://stackoverflow.com/questions/21319996/android-onclick-in-xml-vs-onclicklistener
