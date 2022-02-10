@@ -1,0 +1,118 @@
+🔴How Threads Are Executed 🔴
+___________________________________🔵 A CPU  executes one instruction at a time.
+🔵Instructions are executed in sequence.
+___________________________________
+🔴Why Multithreading is important🔴
+🔵Multiple threads can be executed concurrently
+⚫What is thread?
+ਜਦੋਂ program load ਹੁੰਦਾ memory ਦੇ ਵਿੱਚ, ਫਿਰ CPU execute ਕਰਦਾ process ਨੂੰ, basically process ਹੀ multiple threads contain ਕਰਦਾ, thread is smallest unit of execution ਹੁੰਦਾ jo basically operating system perform ਕਰਦਾ (execute ਕਰਦਾ)
+ਆਪਾ ਇਹ ਕਹਿ ਸਕਦੇ ਹਾ ਵੀ ਆਪਣੀ ਪੂਰੀ application ਦਾ code ਹੁੰਦਾ ਉਹ ਛੋਟੇ-ਛੋਟੇ chunks ਦੇ ਵਿੱਚ divide ਹੁੰਦਾ, ਜੋ ਇੱਕ chunk ਹੁੰਦਾ ਜਿਸਨੂੰ CPU independently handle ਕਰਦਾ ਉਸਨੂੰ thread ਕਹਿੰਦੇ ਹੈ। 
+threads ਇਕੱਠੇ execute ਹੁੰਦੇ ਹੈ,but in sequence.2nd point ਏਸੇ ਤੇ ਹੀ ਹੈ।
+thread ਹਮੇਸ਼ਾ parallel ਹੀ execute ਹੋ ਰਹੇ ਹੁੰਦੇ(same time)।
+
+🔵Modern android devices has multiple cores.
+Multiple processors ਨੂੰ multiple cores ਵੀ ਆਖਦੇ ਹੈ, bcz cpu ਬਹੁਤ fast ਹੈ ਉਹ 1second ਦੇ ਵਿੱਚ ਬਹੁਤ ਵਾਰ context switch ਕਰਦਾ।
+
+🔵The user interface is managed in the main thread.
+ਜਦੋ process create ਹੁੰਦਾ ਤਾਂ, ਉਸਦੇ ਵਿੱਚ ਇੱਕ main thread ਹੁੰਦਾ, ਤੇ
+ਹਰ ਇੱਕ process ਇੱਕ thread contain ਕਰਦਾ ਜਿਸਨੂੰ main thread ਕਹਿੰਦੇ ਹੈ, ਤੇ ਉਹ main thread multiple child ਜਾ seprate threads create, close ਕਰਦਾ.
+ਮਤਲਬ ਹਰ process multiple threads ਤਾ contain ਕਰ ਸੱਕਦਾ ਪਰ minimum ਇੱਕ thread ਉਹ ਜਰੂਰ contain ਕਰਦਾ। 
+
+🔵Long-running operations can freeze the UI.
+Android application ਦੇ ਵਿੱਚ ਜੌ ਕੰਮ UI ਦੇ ਵਿੱਚ ਹੋ ਰਿਹਾ ਹੁੰਦਾ ਇਹ ਸਬਕੁਛ Main thread ਦੇ ਵਿੱਚ ਹੀ handle ਹੁੰਦਾ ਤੇ ਇਸਨੂੰ UI thread ਵੀ ਕਹਿੰਦੇ ਹਨ। 
+for example: ਜੇ ਆਪਾ ਕੋਈ disk file read ਕਰਨੀ ਹੈ ਤੇ ਉਹ file ਬਹੁਤ ਵੱਡੀ ਹੈ, ਤੇ CPU ਇਸ ਕੰਮ ਨੂੰ (file read ਵਾਲੇ ਕੰਮ ਨੂੰ execute ਕਰ ਰਿਹਾ ਹੈ) ਜਿਨਾ ਚਿਰ ਇਹ ਕੰਮ ਖਤਮ ਨਹੀ ਹੁੰਦਾ ਓਨਾ ਚਿਰ UI freeze ਹੀ ਹੋਜੂ bcz CPU instruction execute ਨਹੀ ਕਰੂਗਾ। 5th point ਏਸੇ ਬਾਰੇ ਹੈ।
+
+🔵Network requests are prohibited on the main thread
+🔴 ਇਹ ਕੰਮ main UI thread ਕਰਦਾ .🔴
+1) System events
+2) Input events
+3)Applications
+4) Services
+5) Alarm
+6) UI Drawing 
+ਇਸਦੇ ਨਾਲ-ਨਾਲ ਆਪਣਾ application code ਵੀ main thread ਤੇ execute ਹੁੰਦਾ।
+⚫System 16ms ਤੋ ਬਾਅਦ UI Drawing (ਜੌ ਕੁਝ screen ਤੇ ਦਿੱਸਦਾ ਉਹ android framework re-draw ਕਰਦਾ)
+je ਆਪਣਾ ਕੋਈ ਵੀ operations 16ms ਤੋ ਵੱਧ time ਲੈਂਦਾਂ ਤਾਂ ਉਸਦਾ effect UI ਤੇ ਦਿੱਖਦਾ ਹੈ bcz System 16ms ਤੋ ਬਾਅਦ UI Drawing ਨਹੀ ਕਰ ਪਾਉਗਾ ਜਿਸ ਨਾਲ frame drop ਹੋਊਗਾ।
+ ਏਸੇ ਲਈ ਆਪਾ ਕੋਈ ਵੀ process ਜਿਸ ਵਿੱਚ 1,2,3 second time ਲੱਗਦਾ ਉਸ ਲਈ ਆਪਾ seprate thread ਹੀ create ਕਰ ਲੈਂਦੇ ਹਾ।
+
+🔴Handler Thread intro.....🔴
+what is handler thread & How we can manage Multithreading with handler thread.
+by default thread 3 ਕੰਮ ਕਰਦਾ।
+----------------------------------------------------------
+(1) start (2) ਕੋਈ ਕੰਮ ਕਰੂ ਜੋ task ਆਪਾ ਉਸਨੂੰ ਦਿੱਤਾ ਹੋਊ(3)end
+----------------------------------------------------------
+ਆਪਾ ਹਮੇਸ਼ਾਂ thread ਤੋਂ ਇਹ expecte ਨਹੀਂ ਕਰਦੇ(ਵੀ ਉਹ ਸਿਰਫ star, ਹੋਏ, ਕੰਮ ਕਰੇ, end ਹੋਜੇ),
+ਆਪਾ ਚਾਹੁੰਦੇ ਹਾ ਵੀ thread ਤੇ ਕੋਈ ਐਸਾ loop ਲੱਗ ਜਾਵੇ  ਵੀ ਆਪਾ ਉਸਨੂੰ task ਦਿੰਦੇ ਰਹੀਏ ਤੇ ਉਹ task ਨੂੰ perform ਕਰਦਾ ਰਹੇ। ਇਸ ਲਈ ਆਪਾ thread ਤੇ loop ਲਗਾਉਂਦੇ ਹਾ।
+this make sures ਆਪਾ ਉਸਤੇ condition ਲਗਾਉਂਦੇ ਹਾ ਜੋਂ basically at the end ਜਦੋ ਆਪਾ ਉਸਨੂੰ (thread)close ਕਰਨਾ ਚਾਹੀਏ ਤਾ close ਕਰ ਦਈਏ।
+----------------------------------------------------------
+(1)Thread start (2) ਆਪਾ ਉਸਨੂੰ packets(task/data ਦੇ) ਦਿੰਦੇ ਰਹੀਏ different ਜਿਸ ਵੀ ਤਰ੍ਹਾਂ ਦਾ thread ਹੈ, ਤੇ ਇਹ ਜਾਂ ਤਾਂ ਉਦੋਂ ਤੱਕ run ਕਰੇ ਜਦੋ ਤੱਕ ਆਪਾ ਉਸਨੂੰ data ਦਿੰਦੇ ਰਹੇ ਜਾ ਫਿਰ ਜਦੋ ਤੱਕ ਆਪਣੀ condition ਚੱਲਦੀ ਰਹੇ। 
+ਹੁਣ ਆਪਾ ਆਪਣੇ ਇਸ thread ਨੂੰ feed ਕਰਨਾ with data packets , ਤਾਂ data packets ਵੀ ultimately ਆਪਣੇ ਕੋਲ Work Queue ਹੋਊਗਾ ਜਿਸ ਵਿੱਚ no. of tasks ਹੋਣਗੇ ਤੇ threads ਉਹਨਾ ਵਿੱਚੋ(work queue {ਇਸਦੇ ਵਿੱਚ pending task ਹੁੰਦੇ ਹੈ})
+ ਜੋ task ਦਿੱਤਾ ਹੋਊਗਾ(data-packets) ਉਹ ਲੈਂਦਾ ਰਹੂਗਾ(ਇਸਨੂੰ worker thread ਵੀ ਕਹਿੰਦੇ ਹੈ bcz seprate thread ਇਸਨੂੰ task ਦਿੰਦਾ ਤੇ ਇਹ tasks finish ਕਰਦਾ) (3)Thread end
+----------------------------------------------------------
+ਜੋ work queue ਦੇ ਵਿੱਚ pending tasks ਹੁੰਦੇ ਹੈ ਉਹਨਾ ਨੂੰ create & feed ਕਰਨ ਲਈ ਵੀ ਆਪਾ ਨੂੰ ਕਿਸੇ seprate thread ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ, ਜੋਂ(seprate thread ਦਾ use ਕਰਕੇ) data packets ਨੂੰ create ਕਰਦਾ ਤੇ send ਕਰਦਾ
+(ਆਪਣੇ worker thread ਨੂੰ) ਤੇ ਜੋ ਇਹ (seprate thread packets send ਕਰਦਾ worker thread ਨੂੰ) 
+ਉਹ worker thread ਦੇ work queue ਦੇ ਵਿੱਚ ਜਾਂਦੇ ਹੈ ਤੇ execute ਹੁੰਦੇ ਹੈ।
+
+⚫ਆਪਾ ਕੁਝ class's ਦਾ use ਕਰਕੇ ਇਹ achieve ਕਰ ਸਕਦੇ ਹਾਂ।
+Looper class (aka " Event Loop")
+ਇਹ thread create ਕਰਕੇ (ਇਸਦੇ ਅੰਦਰ work queue ਵੀ ਹੁੰਦਾ ਜਿਸਨੂੰ data packets ਦੇਕੇ ਆਪਾ ) ਇਹ automatically work queue ਤੋ data packets ਲੈਕੇ ਉਸਤੇ ਜੋ ਵੀ operation ਕਰਨਾ ਹੋਊ ਉਹ ਕਰੂਗੀ 
+⚫ Handler Class: by default ਤਾ android ਦੇ ਵਿੱਚ at the end of queue ਆਪਾ packets ਨੂੰ insert ਕਰ ਸਕਦੇ ਹਾ but with the help of Handler Class( ਜੋ ਆਪਾ ਨੂੰ ਇਹ facility provide ਕਰਦੀ ਹੈ) ਵੀ
+ ਨਾਲੇ ਤਾਂ ਆਪਾ data packets insert ਕਰ ਸਕਦੇ ਹਾ ਨਾਲ ਦੀ ਨਾਲ ਆਪਾ ਕਿਸੇ ਵੀ position ਤੇ (data packets insert ਕਰ ਸਕਦੇ ਹਾ) ਤੇ ਨਾਲੇ time delay ਦੀ base ਤੇ ਵੀ data packets insert ਕਰ ਸਕਦੇ ਹਾ
+For example: 3-5 second wait ਕਰਕੇ (ਆਪਣਾ thread ਇਹ ਵਾਲਾ data-packet execute ਕਰੇ)
+ਇਹ ਸੱਭ ਕੁੱਝ ਇਸ lecture https://youtu.be/EFgZOnKK3Dw ਦੇ ਵਿੱਚ ਹੈ।
+1) AsyncTask-Helps get work on/off  the UI thread
+2) HandlerThread- ਇਹ dedicated thread ਹੁੰਦਾ API callbacks ਦੇ ਲਈ
+3) ThreadPool- ਜਦੋ ਆਪਾ no. of tasks 
+ਨੂੰ parallel execute ਕਰਨਾ ਚਾਹੁੰਦੇ ਹਾ for example ਆਪਾ 10 song's ਨੂੰ download ਕਰਨਾ at same time ਤਾਂ ਓਦੋ ਆਪਾ ਇਸਦਾ use ਕਰਦੇ ਹਾ।
+4) IntentService: ਇਹ intents ਨੂੰ on/off ਕਰਦੀ ਹੈ UI thread ਤੋ।
+___________________________________
+🔴 Threads & Memory why can't access UI on background thread🔴
+----------------------------------------------------------
+[      Thread A  (refer to main thread)]
+                     ↓ Write
+       [  Memory Block ] = ???
+                      ↑ Write
+[      Thread B     ]
+----------------------------------------------------------
+⚫ANR [ APPLICATION NOT RESPONDING]
+ਜੇ ਦੋਵੇ thread [thread a&b] ਇੱਕੋ memory block ਨੂੰ access ਕਰਣਗੇ (Read/Write)ਤਾਂ ਆਪਣੇ ਕੋਲ weird ਜੇਹਾ scenenerio ਅਜਾਊਗਾ ਜੋ ਕਿ memory locking ਦੇ topics ਆਜਣਗੇ।
+ਜਿੰਨੇ ਵੀ UI ਦੇ components(Views) ਹੁੰਦੇ ਹੈ, ਉਹ basically mainly exposed ਹੁੰਦੇ ਹੈ ਸਿਰਫ main thread ਤੇ ਹੀ create,access,update ਕੀਤਾ ਜਾਊਗਾ ਤੇ main thread ਤੇ ਹੀ destroy ਹੋਣਗੇ।
+Ui (components) ਕਿਸੇ seprate thread ਤੇ guarantee ਨਹੀ ਹੁੰਦੇ ਵੀ (seprate thread ਤੇ Like B) ਆਪਾ reference ਕਰਾਗੇ, ਤੇ safely/correctly behave ਕਰਣਗੇ।
+For example ਆਪਾ ਕਿਸੇ button ਨੂੰ reference ਕਰਾਗੇ thread B ਤੇ ਤਾਂ ਆਪਣੇ ਕੋਲ weird scenerio ਆਉਣਗੇ like ANR. ਆਊਗਾ। 
+ਜਦੋ ਆਪਾ ਕਿਸੇ view basically ਕਿਸੇ ਨੂੰ reference ਕਰਦੇ ਹਾਂ ਜਾ ਕਿਸੇ button ਨੂੰ update ਕਰਨ ਦੀ try ਕਰਦੇ ਹਾ ਤਾਂ je ਅਗਰ ਉਹ main thread ਦੀ view hierarchy ਤੋ romove ਹੋ ਗਿਆ  ਇਸਦੇ ਕਈ reasons ਹੋ ਸੱਕਦੇ ਹੈ।
+1) ਆਪਣੀ activity recreate ਹੋਈ, background ਤੋ ਦੁਬਾਰਾ foreground ਤੇ ਆਈ। 
+2)User ਨੇ phone ਦੀ orientation change (device rotate ਕੀਤੀ), activity recreate ਹੋਈ, existing views destroy ਹੋਏ ਨਵੇਂ views create ਹੋਏ, ਪਰ ਇੱਥੇ reference ਪਿਛਲੇ view ਦਾ ਸੀ ਤੇ ਜਦੋ ਆਪਾ ਉਸਨੂੰ worker thread ਤੇ reference
+ ਕੀਤਾ ਹੋਊ ਤਾਂ ਉਹ main thread ਤੋ remove ਹੋ ਗਿਆ ਹੋਊਗਾ, ਤੇ ਹੁਣ ਜਦੋ ਆਪਾ update ਕਰਨ ਦੀ try ਕਰਾਗੇ ਤਾਂ ਉਹ view main thread ਤੇ exist ਹੀ ਨਹੀ ਕਰਦਾ & ਹੁਣ application crash ਹੋਜੂ। This is critical..
+even ਇੱਕ single view ਵੀ reference contain ਕਰ ਰਿਹਾ ਹੁੰਦਾ ਪੂਰੀ activity ਦਾ।
+for example: ਇੱਕ button (main activity ਦਾ) ਪੂਰੀ ਦੀ ਪੂਰੀ activity ਦਾ reference contain ਕਰ ਰਿਹਾ ਹੋਊਗਾ।
+ਅਗਰ ਆਪਾ ਕਿਸੇ activity ਦੇ button (object ਨੂੰ) ਕਿਸੇ ਵੀ worker thread ਤੇ reference ਕਰਾਗੇ ਤਾਂ ਉਹ indirectly ਪੂਰੀ activity ਦਾ reference hold ਕੀਤਾ ਹੋਇਆ।
+ਅਗਰ ਉਹ activity destroy ਹੋ ਗਈ ਤਾਂ ਇਹ memory leak ਹੋਜਾਉ(ਆਪਣਾ object leak ਹੋਜੂ)bcz ਆਪਾ ਇੱਕ ਐਸੇ object ਦਾ reference ਲਿਆ ਹੈ memory ਅੰਦਰ ਜੌ exist ਹੀ ਨਹੀ ਕਰਦਾ ।
+
+----------------------------------------------------------
+       Don't hold references
+----------------------------------------------------------
+ਆਪਾ ਕਦੇ ਵੀ ਇਹ ਨਹੀ ਕਰਾਗੇ ਵੀ ਆਪਣੇ main/UI Thread ਦੇ ਅਲਾਵਾ ਆਪਣੇ views  ਦਾ reference ਕਿਸੇ background thread ਤੇ reference ਕਰਾਗੇ। ਸਿਰਫ UI thread ਹੀ basically views ਨੂੰ refer ਕਰ ਰਿਹਾ ਹੋਊਗਾ(views ਦਾ reference ਹੋਊਗਾ)।
+main thread ਹੀ views ਨੂੰ operate ਜਾ ਜੋ ਕੁਝ ਵੀ views ਨਾਲ ਕਰਨਾ ਉਹ (main thread) ਕਰੂਗਾ।
+----------------------------------------------------------
+example: If I could modify data from different threads what could happen?
+For example: Thread A is changing the color of a view and thread B is reading the color at the same tim. Since multi-threading doesn't guarantee which instruction is executed first you might get unexpected results.
+The color is black (0|0|0) before, thread A wants to set white (255|255|255) and start with setting the red component to 255, thread B starts to read and gets the whole color before thread A had a chance to finish and got the color red (255|0|0) instead black.
+This is a simple example which would impact a visual effect but if that happens for some really important data your application will crash horribly and such an error is so nasty and hard to debug.
+ਇਸ  link ਤੇ concurrency ਬਾਰੇ ਬਹੁਤ ਵਧੀਆ information ਦਿੱਤੀ ਹੈ: https://docs.oracle.com/javase/tutorial/essential/concurrency/
+
+example problem : je ਆਪਾ background thread ਦੀ help ਨਾਲ database ਤੋ data download ਕੀਤਾ ਤਾਂ ਆਪਾ ਕਿਵੇ ਉਸਨੂੰ (data) show/update ਕਰਾਗੇ?
+solution: ਆਪਾ main thread ਦੇ ਉੱਤੇ WorkRecords create ਕਰ ਦਿੰਦੇ ਹਾ, ਇੱਕ viewID ਦੇ ਦਿੰਦੇ ਹਾ view ਦੀ ਤੇ ਉਸਦਾ ਇੱਕ callback method ਹੁੰਦਾ ਤੇ ਉਸ callback method ਦਾ reference worker thread ਤੇ ਹੁੰਦਾ।
+ਜਿਵੇਂ ਹੀ worker thread ਤੇ ਕੰਮ complete ਹੋ ਜਾਂਦਾ ਤਾਂ worker thread ਉਸ callback ਦੇ through ਉਹ data different packets ਦੇ through intents/message bundle ਦੇ through send ਕਰ ਦਿਉ।
+----------------------------------------------------------
+Diagram:
+|——————————|
+|main activity         |
+| ________________ |
+| |WorkRecords     | →→↓
+| |viewid।callback|→↑[Thread|Work]
+| |viewID।callback|←←←←←←←↑
+| |_______________| |
+|_________________|
+----------------------------------------------------------
+ਪਰ je ਉਹ main activity (ਜਿਸਤੇ ਆਪਾ data send ਕੀਤਾ) ਉਹ destroy ਹੋ ਗਈ ਹੋਵੇ(ਇੱਥੇ ਆਪਾ definately ਇੱਕ ਐਸੀ ਚੀਜ਼ ਨੂੰ refer ਕਰ ਰਹੇ ਹਾ ਜਾ ਐਸੀ activity ਦਾ method call ਕਰ ਰਹੇ ਹਾ ਜੋ exist ਹੀ ਨਹੀ ਕਰ ਰਹੀ, ਇਸ ਨਾਲ ਤਾਂ Application crash ਹੋਜੂ। ਜੇ ਆਪਾ WorkRecords ਦਾ use ਕਰਾਗੇ ਤਾਂ je ਆਪਣੀ activity ਦਾ reference update ਵੀ ਹੋਇਆ ਹੋਏਗਾ ਤਾਂ bcz ਆਪਾ callback ਦੇ through ਆਪਾ send ਕਰ ਰਹੇ ਹੋਵਾਂਗੇ ਤਾਂ ਓਦੋ ਆਪਣੀ activity ਇਹ ਦੇਖੂਗੀ ਜਿੱਸ view ਨੂੰ refer ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ ਅਗਰ ਉਹ ਮੇਰੇ ਕੋਲ ਹੈ ਤਾਂ ਉਸਨੂੰ update ਕਰੋ ਨਹੀਂ ਤਾਂ discard ਕਰੋ, ਮਤਲਬ ਆਪਾ safely ਕੰਮ ਕਰ ਰਹੇ ਹਾਂ ਇਸ ਨਾਲ crash ਨਹੀ ਹੋਣਗੇ।
+---------------------------------------------------------
