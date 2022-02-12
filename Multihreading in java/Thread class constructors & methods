@@ -1,0 +1,86 @@
+🔴Thread class constructor & methods🔴
+----------------------------------------------------------
+1) Thread t = new [Thread() this is constructor]
+2) ਕਈ ਇਸ examples ਦੇ ਵਿੱਚ Thread ਨੂੰ extend ਕਰਦੀਆਂ ਤੇ ਕਈ
+ Runnable implement ਕਰਦਿਆਂ। 
+For more information visit this link:
+https://youtu.be/GX3yZAhf5xE
+----------------------------------------------------------
+⚫ Simple constructors
+NOTE: Runnable target ਮਤਲਬ।
+1) Thread() default constructor
+2) Thread(Runnable target)
+----------------------------------------------------------
+ example- Thread(Runnable target)
+Test class ਜੋ ਹੈ ਉਹ Runnable interface ਨੂੰ implement 
+ਕਰਦਾ ਜੋ ਕਿ ਹੋ ਗਈ target class ਤੇ ਉਹੀ target class ਆਪਾ
+ ਇੱਥੇ provide ਕਰਤੀ।
+t is Runnable target.
+Test t = new Test();
+Thread th = new Thread(t);
+th.start();
+----------------------------------------------------------
+3) Thread(String name) ਜਦੋ ਆਪਾ ਕੋਈ thread create ਕਰਦੇ ਹਾ 
+ ਤਾਂ JVM by default ਇਹਨਾ threads ਦਾ name provide ਕਰ ਦਿੰਦਾ 
+like thread1, thread2, ਪਰ ਜੇ ਆਪਾ ਚਹੁੰਦੇ ਹਾ ਵੀ ਆਪਾ ਆਪ ਖੁਦ 
+name provide ਕਰ ਸਕਦੇ ਹਾ with: Thread(String name);
+4)Thread(Runnable target, String name) ਜਦੋ ਆਪਾ implement 
+ਕਰ ਰਹੇ ਹੋਈਏ ਉਦੋਂ ਇਸਦਾ use ਕਰਦੇ ਹਾ।
+
+⚫ Thread group constructor
+5)Thread(ThreadGroup tg, Runnable target)
+6)Thread(ThreadGroup tg, String name)
+7)Thread(ThreadGroup tg, Runnable target, String name)
+8)Thread(ThreadGroup tg, Runnable target, String name, long stackSize)
+🔵 Thread methods
+
+⚫ Basic thread methods
+NOTE: native method- ਇਹ ਉਹ method ਹੈ ਜਿੰਨ੍ਹਾਂ ਦੀ implementation 
+java ਦੇ ਵਿੱਚ ਨਹੀ ਕੀਤੀ ਗਈ(ਮਤਲਬ ਇਹ ਕਿਸੇ ਹੋਰ language ਦੇ ਵਿੱਚ code ਕੀਤੇ ਗਏ ਹੈ)
+1) public void run(){}
+2) public synchronized void start(){}
+3) public final native Thread currentThread(){} ਇਹ static method 
+ਹੈ ਜੋ thread reference provide ਕਰਦਾ।
+4)public final native boolean isAlive(){} ਜਿਵੇ name 
+suggest thread ਜਿੰਦਾ ਹੈ ਜਾ ਨਹੀ। ਇਹ boolean value return ਕਰਦਾ।
+ ਜੇ thread dead state ਦੇ ਵਿੱਚ ਹੈ ਤਾ false ਨਹੀ (thread alive ਹੈ) 
+true(true ਦਾ ਮਤਲਬ thread execution state ਦੇ ਵਿੱਚ ਹੈ)।
+
+⚫Naming related methods
+5)public final String getName(){} get ਕਰਨ ਲਈ
+6) public final synchronized void setName(String name){} set ਕਰਨ ਲਈ।
+
+⚫ Deamon thread method
+7)public final boolean isDeamon(){} ਕਿ ਉਹ deamon thread ਹੈ ਜਾ ਨਹੀ, 
+ਇਹ boolean value return ਕਰਦਾ।
+8)public final void setDeamon(boolean on){} ਇਸ ਦੇ ਵਿੱਚ je true ਹੈ 
+ ਤਾ simple thread deamon thread create ਹੋਜੂ। je false ਹੈ ਤਾਂ ਉਹ 
+deamon thread create ਨਹੀ ਹੋਊ
+
+⚫Thread priority method's
+9) public final int getPriority(){} priority get ਕਰਨ ਲਈ।
+10) public final void setPriorty(int newPriority){} to set priority
+
+⚫Preventing thread execution method's(ਇਹ ਜੋ thread ਚੱਲ ਰਿਹਾ(execute ਹੋ ਰਿਹਾ normally)
+ ਉਸਨੂੰ ਕੁਝ time ਲਈ ਰੋਕਦੇ ਹੈ।
+11) public static native void sleep(long milli seconds) throws InterruptedException{}
+12) public static native void yield(){}
+13)public final void join() throws InterruptedException{}
+----------------------------------------------------------
+ਇਹ ਕੁਝ ਹੋਰ ਏਸੇ category ਦੇ method ਜੋ depricated method ਮਤਲਬ ਇਹ method java ਦੇ ਵਿੱਚ ਨਹੀ ਰਹੇ।
+public final void suspend(){}
+public final void resume(){}
+public final void stop(){}
+public void destroy(){}
+----------------------------------------------------------
+
+⚫Thread interrupt method
+14) public void interrupt(){}
+15) public boolean isInterrupted(){}
+16) public static boolean interrupted(){}
+
+⚫inter-thread communication method( Note:ਇਹ Thread class ਦੇ method ਨਹੀ, 
+ਬਲਕੀ Object class ਦੇ method ਹੈ but use ਇਹ thread ਲਈ ਹੁੰਦੇ)
+17) public final void wait() thorws InterruptedException{}
+18) public final native void notify()
+19) public final native void notifyAll()
