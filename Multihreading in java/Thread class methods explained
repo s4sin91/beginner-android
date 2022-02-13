@@ -1,0 +1,176 @@
+----------------------------------
+🔴[ part 1 from lecture 1 to 4 ]🔴
+---------------------------------- 
+🔴🔴🔴 IMPORTANT things to note
+
+ਜੋ public static void main (String [] args) ਹੁੰਦਾ ਉਹ
+ ਖੁਦ ਇੱਕ thread ਹੁੰਦਾ(ਜੋ  JVM ਨੇ create ਕੀਤਾ) ਤੇ ਉਸਦਾ 
+ name main ਹੁੰਦਾ ਹੈ।
+ਜਿੰਨਾ ਕੁਝ ਵੀ main ਦੇ ਵਿੱਚ ਲਿਖਿਆ ਹੁੰਦਾ ਉਹ main thread ਹੀ 
+ execute ਕਰਦਾ, ਫਿਰ ਚਾਹੇ ਕੋਈ ਨਵਾਂ thread ਦਾ code ਲਿਖਿਆ
+ ਹੋਏ main method ਦੇ ਵਿੱਚ।
+class Test extends Threads{
+ public void run (){
+// anything coded here }
+}
+class main {
+public static void main(String[] args){
+Test t = new Test();
+t.start();}
+}
+----------------------------------------------------------
+ਇਹ ਦੋਵੇ ਖੁਦ ਮੈਂ thread execute ਕਰੂ। ਜਿਵੇ ਉੱਪਰ & ਥੱਲੇ explain ਕੀਤਾ ਹੋਇਆ।
+Test t = new Test();
+t.start(); 
+----------------------------------------------------------
+ਪਰ ਜੋ ਕੁਝ Test class ਦੇ run() method ਦੇ ਵਿੱਚ ਲਿਖਿਆ ਹੋਊ ਉਹ
+ new thread ਹੀ execute ਕਰੂ by default new thread ਦਾ name
+ thread0 ਹੁੰਦਾ ਜੋ JVM provide ਕਰਦਾ। 
+___________________________________🔴 LECTURE 7, part1🔴
+----------------------------------------------------------
+⚫ method covered
+2 basic method: 
+(1) currentThread(){}
+ (2) isAlive(){}
+ & Naming method ਦੋਵੇ ਹੀ।
+1)getName(){}
+ 2)setName(String name){}
+----------------------------------------------------------
+___________________________________
+
+
+🔴 LECTURE 8 part2🔴
+⚫what how & why daemon?
+daemon thread background ਤੇ execute ਹੁੰਦਾ ਹੈ ਕਿਸੇ ਦੂਜੇ thread ਦੇ।
+ ਇਹ (daemon thread) ਜਿਸਦੇ background run ਕਰਦਾ
+ ਉਸਨੂੰ service provide ਕਰਦਾ।
+main method (main thread) ਦੇ background ਵੀ daemon thread
+execute ਹੁੰਦੇ eg- Garbage Collector,finalizer,Attach Listener,Signal dispatcher etc
+----------------------------------------------------------
+for example:
+(1) ਜਿਵੇ ms-word ਦੇ ਵਿੱਚ ਜੇ ਆਪਾ ਕੋਈ spelling ਗਲਤ type ਕਰਦੀਏ ਤਾ ਉਹ
+ ਦੱਸ ਦਿੰਦਾ ਵੀ ਇਹ spelling ਗਲਤ ਹੈ। ਇਹ ਵੀ ਇੱਕ service provide ਕਰ ਰਿਹਾ।
+(2) Garbage Collector: main method execute ਹੋ ਰਿਹਾ, ਪਰ ਜੇ
+ suddenly memory full ਹੋ ਗਈ ਪਰ main method ਨੂੰ memory ਚਾਹੀਦੀ ਹੈ
+ ਪਰ ਉਹ ਉਸਨੂੰ ਨਹੀ ਮਿੱਲ ਰਹੀ। main method (ਜੋ ਕੀ main thread ਹੈ ਉਸ )
+ ਦੇ background ਇੱਕ daemon thread execute ਹੁੰਦਾ ਰਹਿੰਦਾ ਜੋ ਹੈ
+ Garbage Collector ਤੇ ਇਸਦਾ (Garbage Collector) ਕੰਮ ਹੈ ਕਿ ਜੇ
+ main method ਨੂੰ ਕੋਈ problem ਆਉਂਦੀ ਹੈ [memory leakage, memory full etc]
+ ਤਾ Garbage Collector waste objects ਨੂੰ delete ਕਰਦਾ 
+[ waste objects delete ਹੋਣ ਨਾਲ memory free ਹੋ ਜਾਂਦੀ ਹੈ ]ਤੇ
+ main method ਨੂੰ execute ਕਰਦਾ।
+
+NOTE: ਜਿੰਨਾ time main thread
+(ਇੱਥੇ main thread ਮਤਲਬ ਜਿਸ thread ਨੇ daemon thread create ਕੀਤਾ)
+ ਕੋਈ ਕੰਮ ਨਹੀਂ ਕਰਦਾ ਓਨਾ time daemon thread ਵੀ ਨਹੀ ਚੱਲਦਾ।
+ why bcoz daemon thread ਦੂਜੇ thread ਦੇ background ਚੱਲਦਾ ਤੇ
+ ਉਸਨੂੰ (ਜਿਸਦੇ background ਚੱਲਦਾ ਉਸਨੂੰ) service provide ਕਰਦਾ,
+ ਜੇ main ਕੋਈ ਕੰਮ ਨਹੀ ਕਰਦਾ ਤਾ daemon service ਕਿਸਨੂੰ ਦਿਉਗਾ।
+----------------------------------------------------------
+⚫ Daemon thread methods
+void setDaemon(boolean);
+boolean isDaemon();//this method check is thread Deamon or not
+----------------------------------------------------------
+⚫ way to create Daemon thread
+ਆਪਾ ਪਹਿਲਾ thread ਨੂੰ daemon thread create ਕਰਦੇ ਹਾ ਫਿਰ 
+ thread start ਕਰਦੇ ਹਾ। ਨਹੀ ਤਾਂ ਇਹ exception provide ਕਰੂ
+  IlligalThreadStateException ਨਾਮ ਦੀ।
+NOTE- we cannot create main thread as daemon.
+ why bcoz main thread ਪਹਿਲਾ ਹੀ execute ਹੋ ਜਾਂਦਾ ਇਸ ਲਈ
+ ਉਹ daemon thread create ਨਹੀ ਹੋ ਸਕਦਾ।
+----------------------------------------------------------
+Test t= new Test();
+t. setDeamon(true);
+t.start();
+----------------------------------------------------------
+⚫daemon thread life
+daemon thread ਜਿਸ thread ਦੇ background ਚੱਲਦਾ ਹੈ ਉਸਦੀ life ਤੇ
+ depend ਕਰਦੀ ਹੈ। ਜਿੰਨਾ time main
+ (ਜਿਸਦੇ background daemon thread execute ਹੋ ਰਿਹਾ) thread
+ execute ਕਰੂਗਾ ਓਨਾ time daemon thread execute ਕਰੂਗਾ ਜਦੋ 
+ main thread dead state ਦੇ ਵਿੱਚ ਗਿਆ ਓਦੋ ਹੀ ਇਹ (daemon thread) dead
+ ਹੋ ਗਿਆ। why bcoz ਇਹ(daemon thread) main thread ਨੂੰ service provide ਕਰ ਰਿਹਾ।
+⚫ Nature of daemon thread
+ daemon thread inherit its nature/property from parent thread
+ which is also known as main thread. main thread ਜਿਸਨੇ deamon
+ ਨੂੰ create ਕੀਤਾ।
+ਜੇ ਉਹ(ਜਿਸਨੇ thread create ਕੀਤਾ) simple thread ਹੈ ਤਾਂ ਉਹ simple thread ਬਣੂ,
+ ਜੇ ਉਹ daemon ਹੈ ਤਾ ਉਹ by default daemon thread ਹੀ create ਹੋਊ।
+⚫JVM role in daemon thread
+ਮੰਨ ਕੇ ਚੱਲੋ ਬਹੁਤ ਸਾਰੇ threads ਹੈ, JVM ਓਹਨਾ ਨੂੰ execute ਕਰਦਾ ਰਹੇਗਾ
+ ਜਦੋ ਸਾਰੇ thread execute ਹੋਨੋ ਬੰਦ ਹੋ ਗਏ ਓਦੋ JVM off/shutdown ਹੋਜੂ।
+ਜੇ ਕੋਈ daemon thread execute ਹੋ ਰਿਹਾ ਹੋਏਗਾ ਤਾ JVM ਉਸਨੂੰ dead state
+ ਦੇ ਵਿੱਚ ਕਰਦੂ (kill ਕਰਕੇ) ਤੇ ਆਪ JVM shutdown ਹੋ ਜਾਊਗਾ। ਇੱਥੇ ਇੱਕ ਗੱਲ ਯਾਦ
+ ਰੱਖਣ ਵਾਲੀ ਹੈ ਵੀ JVM ਦੂਜੇ simple thread ਤੇ depend ਰਹਿੰਦਾ 
+(ਮਤਲਬ ਜੇ simple thread execute ਹੋ ਰਹੇ ਹੈ ਤਾ JVM ਉਹਨਾ ਨੂੰ execute ਕਰਦਾ ਰਹੇਗਾ)
+ ਪਰ ਜੇ ਦੂਜੇ thread ਦੀ execution complete ਹੋ ਗਈ ਤੇ ਕੋਈ daemon thread
+ ਅਜੇ ਵੀ execute ਹੋ ਰਿਹਾ ਤਾ JVM ਪਹਿਲਾ ਉਸਨੂੰ kill ਕਰੂਗਾ ਫਿਰ JVM ਆਪ shutdown ਹੋਜੂ। 
+⚫ daemon thread priority
+by default ਤਾ daemon thread ਦੀ priority low ਹੀ ਹੁੰਦੀ ਹੈ
+ ਪਰ ਫਿਰ ਵੀ ਆਪਾ ਨੂੰ ਉਸਨੂੰ low ਹੀ ਰੱਖਣਾ ਚਾਹੀਦਾ ਹੈ। why bcoz
+ daemon thread background ਤੇ execute ਹੁੰਦਾ ਹੈ ਕਿਸੇ ਦੂਜੇ thread ਦੇ।
+ ਇਸਦੀ priority ਇਸ ਲਈ ਜਾਂ ਤਾਂ (ਜਿਸਦੇ background ਇਹ ਚੱਲਦਾ ਹੈ)
+ ਉਸਦੇ ਬਰਾਬਰ ਜਾ ਉਸਤੋ low ਹੁੰਦੀ ਹੈ।
+ but we can change its priority according to our needs.
+
+
+___________________________________
+
+🔴 LECTURE 9, part3🔴
+----------------------------------------------------------
+⚫ Thread priority
+
+----------------------------------------------------------
+⚫ priority range & how to set
+priority are represented in the form of integer values
+ ਜਿਸਦੀ range ਹੁੰਦੀ ਹੈ 1-10 ਜੇ ਨਹੀ ਤਾਂ ਇਹ ਇੱਕ exception ਹੋਊਗੀ।
+1=MIN_PRIORITY
+5=NORM_PRIORITY
+10=MAX_PRIORITY
+by default main method ਦੀ priority 5 ਹੁੰਦੀ ਹੈ,
+ ਜਿਵੇ ਆਪਾ ਨੂੰ ਪਤਾ ਵੀ ਜਦੋ thread ਬਣਦਾ ਤਾਂ ਉਹ ਆਵਦੇ parent thread
+ ਤੋ properties inherit ਕਰਦਾ ਤੇ same ਏਸੇ case ਵਿੱਚ ਜਦੋ main thread
+ ਤੋ new thread create ਹੋਊ ਉਸਦੀ priority ਵੀ 5 ਹੀ ਹੋਊ bcoz
+ main thread ਦੀ ਨੂੰ default priority 5 ਹੁੰਦੀ।
+NOTE: priorities depend on platform (Windows does not support priorities)
+⚫JVM provides the priority to each thread & according to
+ these priorities JVM allocate the processor
+ਜਿਸ thread ਦੀ ਜਿਆਦਾ priority ਹੋਊਗੀ ਉਹ ਪਹਿਲਾ execute ਹੋਊਗਾ
+ ਜਿਸਦੀ ਘੱਟ ਓਹ ਬਾਦ ਵਿੱਚ ਪਰ ਜੇ ਕਿਸੇ threads ਦੀ priorities same
+ ਹੈ ਤਾਂ ਇਹ JVM ਤੇ depend ਕਰੂਗਾ ਵੀ ਉਹ ਕਿਸ thread ਨੂੰ ਪਹਿਲਾ processor ਦਿਊਗਾ।
+ same priority thread ਨੂੰ processor ਦੇਣ ਦਾ ਇਹ process 
+ internally algorithms ਦੇ ਉੱਪਰ depend ਕਰਦਾ।
+
+___________________________________
+🔴 LECTURE 10, part4🔴
+----------------------------------------------------------
+⚫ sleep method
+Thread Class ਦੇ ਵਿੱਚ 2 sleep methods ਹੈ ਮਤਲਬ sleep method is overloaded.
+1) public static native void sleep(long milliseconds) Throws InterruptedException 
+2) public static void sleep(long milliseconds, int nanoseconds) Throws InterruptedException
+----------------------------------------------------------
+⚫ ਇਹ method ਜਿੰਨਾ time ਆਪਾ provide ਕੀਤਾ ਹੁੰਦਾ ਓਨਾ time thread ਨੂੰ
+ sleep mode ਦੇ ਵਿੱਚ ਭੇਜ ਦਿੰਦਾ(ਮਤਲਬ thread execution ਰੁੱਕ ਜਾਓ)
+ ਤੇ ਬਾਦ ਵਿੱਚ ਫਿਰ ਤੋ start ਹੋਜੂ। 
+⚫if the value of milliseconds is negative then "IllegalArgumentException" is throw.
+⚫if the value of nanoseconds is not in the range of 1-999999
+ then "IllegalArgumentException" is thrown.
+⚫ ਜਦੋ ਵੀ ਆਪਾ sleep method ਦਾ use ਕਰਨਾ ਤਾਂ ਆਪਾ ਨੂੰ 
+ Exception ਵੀ handle ਕਰਨੀ ਪਉਗੀ ਜੋ "InterruptedException" ਹੈ
+ ਨਹੀ ਤਾ JVM compile time ਤੇ compilation error show ਕਰੂ ਤੇ 
+ program compile ਹੀ ਨਹੀ ਹੋਊਗਾ।
+⚫ ਜਦੋ ਕੋਈ thread sleep ਕਰ ਰਿਹਾ ਤੇ ਕੋਈ ਦੂਜਾ thread
+ ਉਸਨੂੰ (ਜੋ sleep ਕਰ ਰਿਹਾ/in sleeping mode) interrupt ਕਰਦਾ
+ ਤਾਂ ਇਹ "InterruptedException" throw ਕਰਦੂ।
+⚫ਇਹ method current thread ਦੀ execution pause ਕਰ ਦਿੰਦਾਂ।
+ਜਦੋ JVM ਇਹ method find ਕਰ ਲੈਦਾ code ਦੇ ਵਿੱਚ ਤਾਂ JVM check ਕਰਦਾ
+ ਕਿਹੜਾ thread run ਕਰ ਰਿਹਾ ਤੇ ਕਿਹੜੇ thread ਲਈ sleep method use ਕੀਤਾ
+ ਉਸ(current thread) thread ਦੀ execution pause ਕਰ ਦਿੰਦਾ।
+ਜਦੋ ਵੀ ਆਪਾ sleep method use ਕਰਦੇ ਹਾ to pause the execution of thread.
+ the thread scheduler assign the CPU to another thread
+ if ਕੋਈ thread exist ਕਰਦਾ। ਇਸਦੀ ਕੋਈ guarantee ਨਹੀ ਵੀ ਜਿੰਨਾ ਆਪਾ
+ sleep method ਦੇ ਵਿੱਚ time ਦਿੱਤਾ ਓਨਾ time ਹੀ ਉਹ thread pause ਹੋਊ
+ ਇਹ totally thread scheduler ਤੇ depend ਕਰਦਾ।
+⚫ ਜਦੋ thread sleep ਕਰ ਰਿਹਾ,it doesn't lose any locks
+ or monitors that it had acquired before sleeping.
+___________________________________
