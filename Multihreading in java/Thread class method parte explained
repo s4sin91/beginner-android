@@ -1,0 +1,55 @@
+part 2
+
+___________________________________
+🔴Lecture 12
+----------------------------------------------------------
+⚫ yield method();
+public static native void yield(){}
+which stop the current executing thread & give a chance 
+ to other threads for execution.
+ਜਿਹੜਾ current running thread ਹੈ(ਜੋ run ਹੋ ਰਿਹਾ) ਉਸਨੂੰ stop ਕਰਦੂ 
+ ਤੇ ਬਾਕੀ ਦੇ thread ਜਿੰਨਾ ਦੀ priority same ਹੈ ਜਾ high ਹੈ ਉਹਨਾ ਨੂੰ 
+ ਇਹ permission ਦੇ ਦਿਉਗਾ ਵੀ ਤੁਸੀਂ execute ਹੋ ਜਾਓ।
+----------------------------------------------------------
+for example: ਆਪਾ ਕਿਸੇ shopping mall ਗਏ ਆਪਾ ਬਹੁਤ shopping ਕੀਤੀ, 
+ ਫਿਰ ਆਪਾ billing counter ਤੇ bill ਲੈਕੇ ਉਸਨੂੰ ਪੈਸੇ ਦੇਣੇ ਹੈ ਤੇ 
+ ਆਪਣੇ ਕੋਲ ਸਮਾਣ ਬਹੁਤ ਹੈ ਤੇ bill ਕੱਟਣ ਦੇ ਵਿੱਚ 5-10 minute ਲੱਗਣ ਗੇ।
+  ਦੂਜੇ ਪਾਸੇ ਇੱਕ ਹੋਰ ਬੰਦਾ ਉਹ ਸਿਰਫ਼ ਇੱਕ ਹੀ ਸਮਾਣ ਲੈਕੇ ਆਇਆ ਤੇ ਉਸਦੇ bill ਕੱਟਣ 
+ ਲਈ ਸਿਰਫ਼ 10-20 seconds ਲੱਗਣ ਗੇ। ਇਸ example ਦੇ ਵਿੱਚ ਪਹਿਲਾ 
+ shopping mall ਵਾਲਾ person2(ਘੱਟ ਸਮਾਣ ਵਾਲਾ) ਦੀ billing ਕਰਦੂ।
+----------------------------------------------------------
+⚫ internal working
+ in java 5: yield method internally sleep method ਦਾ ਹੀ use ਕਰਦਾ ਸੀ।
+in java 6: thread hint ਦਿੰਦਾਂ thread scheduler ਨੂੰ ਵੀ 22 ਮੈ stop ਹੋਣਾ ਚਾਹੁੰਦਾ, but internally ਇਹ depend ਕਰਦਾ thread scheduler ਤੇ ਵੀ ਉਹ thread ਦੀ hint accept ਕਰੇ ਜਾਂ ਫ਼ਿਰ ignore ਕਰਦੇ।
+----------------------------------------------------------
+
+
+___________________________________
+🔴Lecture 13
+----------------------------------------------------------
+⚫ join method();
+if a thread wants to wait for another thread to 
+ complete its task, then we should use join() method.
+we use join method ਜਦੋ ਮੈ ਚਾਹੁੰਦਾ ਵੀ ਇੱਕ thread stop ਹੋ ਜਾਵੇ ਤੇ ਉਹ
+ ਦੂਜੇ thread ਦਾ wait ਕਰੇਗਾ ਵੀ ਜਦੋ ਵੀ ਦੂਜਾ thread ਆਵਦਾ task ਨੂੰ 
+ complete ਕਰੂਗਾ ਮੈ(ਜਿਹੜਾ thread wait ਕਰ ਰਿਹਾ ਸੀ) 
+ ਉਸਨੂੰ(ਜੋ ਦੂਜਾ thread ਆਵਦਾ task complete ਕਰਕੇ ਆਇਆ) join ਕਰ ਲਊਗਾ।
+----------------------------------------------------------
+⚫join ਦੇ ਲਈ 3 overload methods ਬਣਾਏ ਗਏ ਹੈ
+(same name ਦੇ method within same class with different perameters)।
+(1) public final void join () throws InterruptedException{}
+(2) public final synchronized void join
+ (long milliseconds)throws InterruptedException{}
+(3) public final synchronized void join
+ (long milliseconds, int nanoseconds)throws InterruptedException{}
+
+
+
+
+___________________________________
+🔴Lecture 14
+----------------------------------------------------------
+⚫ Difference between sleep yield & join method: 
+https://youtu.be/6AnydGOob7Q
+----------------------------------------------------------
+
