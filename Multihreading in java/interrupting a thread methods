@@ -1,0 +1,39 @@
+method
+public void interrupt (){}
+ਇਹ method thread ਨੂੰ interrupt ਕਰਨ ਲਈ use ਹੁੰਦਾ। ਇਹ ਸਿਰਫ਼
+ ਉਸ time work ਕਰਦਾ ਜਦੋ thread waiting ਜਾ sleeping state ਦੇ ਵਿੱਚ
+ ਹੈ(ਮਤਲਬ wait() ਜਾ sleep() method ਦਾ use ਕੀਤਾ)। 
+ ਇਹ method InterruptedException throw ਕਰਦਾ।
+ਜੇ ਆਪਾ sleep ਜਾ wait ਦਾ use ਕੀਤੇ ਬਿਨਾ thread ਨੂੰ interrupt ਕਰਦੇ ਹਾ ਤਾਂ 
+ interrupt method waste ਹੀ ਜਾਊਗਾ ਤੇ ਉਹ thread ਆਵਦੀ 
+ normal execution ਕਰਦਾ ਰਹੇਗਾ ਤੇ catch block ਦੇ ਵਿੱਚ ਨਹੀ ਜਾਉਗਾ।
+ਜਦੋ ਆਪਾ thread ਨੂੰ interrupt ਕਰਦੇ ਹਾ ਤਾਂ ਉਹ catch block ਦੇ ਵਿੱਚ 
+ ਆਜਾਉਗਾ ਤੇ ਉੱਥੇ code execute ਹੋਣ ਲੱਗ ਜਾਊਗਾ।
+----------------------------------------------------------
+
+----------------------------------------------------------
+
+public boolean isInterrupted(){}
+public static boolean interrupted (){}
+ਇਹ ਦੋਵੇ method check ਕਰਦੇ thread interrupt ਹੋਇਆ ਜਾ ਨਹੀ
+ but ਛੋਟਾ ਜਿਹਾ difference ਹੈ। ਜੇ thread interrupt ਹੋਇਆ ਤਾ
+ ਦੋਵੇ method true return ਕਰਣਗੇ ਨਹੀ ਦੋਵੇ false return ਕਰਣਗੇ।
+----------------------------------------------------------
+interrupted method: will change the result if use twice.
+isInterrupted method: does not clear the interrupted status
+ & will produce same result if called twice.
+----------------------------------------------------------
+⚫ interrupted method: clears the interrupted status from
+  true to false if thread is interrupted.
+ਜੇ ਮੈ thread ਨੂੰ interrupt ਕਰਾਇਆ, ਤਾਂ isInterrupted method ਜੋ ਵੀ 
+ interrupted status ਹੈ ਉਹ true ਹੋ ਜਾਊਗਾ ਫ਼ਿਰ ਉਹ interrupted status
+  ਨੂੰ true ਤੋ false ਦੇ ਵਿੱਚ change ਕਰਦੂ ਜੇ thread interrupt ਹੋਇਆ ਹੈ ਤਾ।
+⚫ isInterrupted method: ਇਹ method interrupted status ਨੂੰ 
+ ਕਦੇ ਵੀ clear/change ਨਹੀ ਕਰਦਾ। ਮਤਲਬ ਜਿਵੇਂ ਹੀ thread interrupt ਹੋਊਗਾ
+  isInterrupted method true value return ਕਰਦੂ ਤੇ ਉਹ ਜੋ
+  interrupted status ਹੈ ਉਸਦੇ ਵਿੱਚ ਵੀ value true ਤੇ ਇਹ
+  (interrupted status ਵਾਲੀ value) true ਹੀ ਰਹੂਗੀ change ਨਹੀ ਹੋਊਗੀ।
+⚫ ਜੋ interrupted method ਹੈ ਉਸਨੂੰ ਆਪਾ 2 ਵਾਰ use ਕਰਦੇ ਹੈ ਤਾ 
+ ਉਹ(interrupted method) output ਨੂੰ change ਕਰਦੂ but if we use
+ isInterrupted method ਨੂੰ 1,2 ਜਿੰਨੀ ਵਾਰ ਮਰਜ਼ੀ use ਕਰੀਏ ਤਾ 
+ ਉਸਦੀ output ਹਮੇਸ਼ਾ same ਹੀ ਰਹੂਗੀ।
