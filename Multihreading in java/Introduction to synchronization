@@ -61,17 +61,27 @@ Real world example: banking apps ਦੇ ਵਿੱਚ ਮੈ ਕੋਈ
  ਇਸ ਲਈ synchronization ਦਾ concept ਆਇਆ।
 
 ___________________________________
-⚫ Defination: synchronization is the process by which we control the accessibility of multiple-thread of a particular resource.
+⚫ Defination: synchronization is the process by 
+ which we control the accessibility of multiple-thread 
+ of a particular resource.
 ⚫ Problem which can occur without synchronization:-
 1)Data Inconsistancy.
-2) Thread interference( multiple threads ਆਪਸ ਦੇ ਵਿੱਚ interfare ਕਰ ਸਕਦੇ ਹੈ ਜਿਸਦੇ ਨਾਲ deadlock problem ਵੀ occur ਹੋ ਸਕਦੀ ਹੈ)
+2) Thread interference( multiple threads ਆਪਸ ਦੇ ਵਿੱਚ 
+ interfare ਕਰ ਸਕਦੇ ਹੈ ਜਿਸਦੇ ਨਾਲ deadlock problem ਵੀ occur ਹੋ ਸਕਦੀ ਹੈ)
 ⚫ Advantages of synchronization:-
 1)No data inconsistancy problem.
 2)No thread interfarence.
 ⚫ Disadvantages of synchronization:- 
-1) Increase the waiting time period of threads. ਮਤਲਬ (ਆਪਣੇ ਇਸ ਵਾਲੇ app ਦੇ ਵਿੱਚ) ਜਦੋ number of users increase ਹੋਣਗੇ ਤਾਂ thread ਇੱਕ ਇੱਕ ਕਰਕੇ resource ਨੂੰ use ਕਰਣਗੇ ਬਾਕੀ thread waiting time period ਦੇ ਵਿੱਚ ਜਾਣਗੇ। ਇਸ ਨਾਲ application ਦੀ performance decrease ਹੁੰਦੀ ਜਾਊਗੀ।
+1) Increase the waiting time period of threads. ਮਤਲਬ
+ (ਆਪਣੇ ਇਸ ਵਾਲੇ app ਦੇ ਵਿੱਚ) ਜਦੋ number of users increase ਹੋਣਗੇ
+ ਤਾਂ thread ਇੱਕ ਇੱਕ ਕਰਕੇ resource ਨੂੰ use ਕਰਣਗੇ ਬਾਕੀ thread 
+ waiting time period ਦੇ ਵਿੱਚ ਜਾਣਗੇ। ਇਸ ਨਾਲ application ਦੀ 
+  performance decrease ਹੁੰਦੀ ਜਾਊਗੀ।
 2) Create performance problems.
-⚫ Performance ਦੀ disadvantages ਨੂੰ overcome ਕਰਨ ਲਈ java ਨੇ ਇੱਕ package creae ਕਰ ਦਿੱਤਾ java.util.concurrent। ਇਸ ਦੇ ਨਾਲ ਆਪਾ synchronization acchive ਕਰ ਸਕਦੇ ਹਾਂ without thread ਨੂੰ wait ਕਰਾਏ।
+⚫ Performance ਦੀ disadvantages ਨੂੰ overcome ਕਰਨ ਲਈ java
+ ਨੇ ਇੱਕ package creae ਕਰ ਦਿੱਤਾ java.util.concurrent।
+ ਇਸ ਦੇ ਨਾਲ ਆਪਾ synchronization acchive ਕਰ ਸਕਦੇ ਹਾਂ without
+ thread ਨੂੰ wait ਕਰਾਏ।
 ----------------------------------------------------------
 ⚫ Types of synchronization
 
