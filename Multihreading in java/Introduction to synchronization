@@ -1,0 +1,93 @@
+___________________________________🔴 
+introduction to synchronization [What is synchronization,
+ problems without synchronization, advantages
+ and disadvantages]
+___________________________________
+
+----------------------------------------------------------
+//Example without synchronization
+class BookTheaterSeat {
+	int total_seats = 10;
+	void bookSeat(int seats) {
+		if (total_seats >= seats) {
+			System.out.println(seats+" seats booked successfully");
+			total_seats = total_seats - seats;
+			System.out.println("Seats Left : " + total_seats);
+		} else {
+			System.out.println("Sorry seats cannot be booked...!!");
+			System.out.println("Seats Left : " + total_seats);
+		}
+	}
+}
+class MovieBookApp extends Thread {
+	static BookTheaterSeat b;
+	int seats;
+	public void run() {
+		b.bookSeat(seats);
+	}
+	public static void main(String[] args) {
+		b = new BookTheaterSeat();
+		MovieBookApp brar = new  MovieBookApp();
+		brar.seats = 7;
+		brar.start();
+		MovieBookApp singh = new  MovieBookApp();
+		singh.seats = 6;
+		singh.start();
+	}
+}
+
+ਇਸ example ਦੇ ਵਿੱਚ ਹੋ ਸਕਦਾ output ਸਹੀ ਆਜੇ ਹੋ ਸਕਦਾ ਗਲਤ ਆਜੇ
+ we cannot assume output। ਕੋਈ guarantee ਨਹੀ ਵੀ ਦੋਵਾਂ 
+ persons ਦੀ seat book ਹੋਊਗੀ ਜਾ ਨਹੀ। why bcoz ਹੋ ਸਕਦਾ ਇੱਕ
+ thread if condition ਦੇ ਵਿੱਚ ਚਲਾ ਜਾਵੇ ਦੂਜਾ else ਦੇ ਵਿੱਚ। 
+ ਇਹ ਵੀ ਹੋ ਸਕਦਾ ਦੋਵੇ ਹੀ if ਦੇ ਵਿੱਚ ਚਲੇ ਜਾਣ। why bcoz ਦੋਵੇ thread
+ same resource ਤੇ ਇੱਕ ਸਾਥ execute ਹੋ ਰਹੇ ਮਤਲਬ ਦੋਵੇਂ ਨਾਲ ਨਾਲ
+  (parallel execute) ਹੋ ਰਹੇ ਹੈ । 
+  we cannot control thread execution.
+
+⚫ without synchronization
+ਉੱਪਰ ਵਾਲੇ program ਦੇ ਵਿੱਚ constant output ਨਹੀ provide ਕਰ
+  ਪਾ ਰਿਹਾ program।ਜੇ output ਹੀ ਗਲਤ ਹੈ ਤਾਂ ਆਪਣੀ 
+ proper application ਹੀ ਗਲਤ ਹੋ ਗਈ।
+Real world example: banking apps ਦੇ ਵਿੱਚ ਮੈ ਕੋਈ
+ transaction ਕਰ ਰਿਹਾ(net-banking ਦੇ through),
+  ਤੇ ਕੋਈ ਦੂਜਾ person ਜਿਸ ਕੋਲ ਮੇਰਾ atm ਹੈ ਉਹ ਮੇਰੇ
+ atm through credit ਕਰ ਰਿਹਾ।
+ ਇਸ case ਦੇ ਵਿੱਚ money in consistant ਹੋ ਸਕਦਾ ਹੈ।
+ਇਸ (like banking apps) ਆਪਾ ਨੂੰ proper ਧਿਆਨ ਰੱਖਣਾ ਪੈਂਦਾ ਵੀ 
+ ਅਪਣਾ data inconsistent ਨਾ ਹੋਵੇਂ output constant ਹੋਵੇ। 
+ ਜਦੋ ਆਪਾ ਇਸ ਤਰ੍ਹਾਂ ਦੇ apps ਦੇ ਵਿੱਚ thread ਦਾ use ਕਰਦੇ ਹਾਂ ਤਾਂ 
+ data inconsistent ਦੀ problem ਆ ਸਕਦੀ ਹੈ
+ ਇਸ ਲਈ synchronization ਦਾ concept ਆਇਆ।
+
+___________________________________
+⚫ Defination: synchronization is the process by which we control the accessibility of multiple-thread of a particular resource.
+⚫ Problem which can occur without synchronization:-
+1)Data Inconsistancy.
+2) Thread interference( multiple threads ਆਪਸ ਦੇ ਵਿੱਚ interfare ਕਰ ਸਕਦੇ ਹੈ ਜਿਸਦੇ ਨਾਲ deadlock problem ਵੀ occur ਹੋ ਸਕਦੀ ਹੈ)
+⚫ Advantages of synchronization:-
+1)No data inconsistancy problem.
+2)No thread interfarence.
+⚫ Disadvantages of synchronization:- 
+1) Increase the waiting time period of threads. ਮਤਲਬ (ਆਪਣੇ ਇਸ ਵਾਲੇ app ਦੇ ਵਿੱਚ) ਜਦੋ number of users increase ਹੋਣਗੇ ਤਾਂ thread ਇੱਕ ਇੱਕ ਕਰਕੇ resource ਨੂੰ use ਕਰਣਗੇ ਬਾਕੀ thread waiting time period ਦੇ ਵਿੱਚ ਜਾਣਗੇ। ਇਸ ਨਾਲ application ਦੀ performance decrease ਹੁੰਦੀ ਜਾਊਗੀ।
+2) Create performance problems.
+⚫ Performance ਦੀ disadvantages ਨੂੰ overcome ਕਰਨ ਲਈ java ਨੇ ਇੱਕ package creae ਕਰ ਦਿੱਤਾ java.util.concurrent। ਇਸ ਦੇ ਨਾਲ ਆਪਾ synchronization acchive ਕਰ ਸਕਦੇ ਹਾਂ without thread ਨੂੰ wait ਕਰਾਏ।
+----------------------------------------------------------
+⚫ Types of synchronization
+
+Two types of synchronization.
+(1) Process synchronization(not present in java multithreading)
+(2) Thread synchronization
+Thread Synchronization ਦੇ ਅੱਗੇ ਵੀ 2 types ਹੈ।
+(1) Mutual exclusive
+(2) Cooperation(inter thread communication in java)
+⚫Mutual exclusive(can be achieved by 3 ways)
+1)By "synchronized method"
+2)By "synchronized block"
+3)By "static synchronization"
+⚫ Cooperation(can be achieved by following methods of Object class)
+1)wait();
+2)notify();
+3)notifyAll();
+----------------------------------------------------------
+___________________________________
