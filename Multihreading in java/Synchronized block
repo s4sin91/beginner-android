@@ -1,0 +1,20 @@
+___________________________________
+🔴ਜਦੋ already synchronized method ਹੈ ਤਾਂ synchronized block 
+  ਦੀ ਕੀ ਲੋੜ ਹੈ।
+
+⚫ Synchronized block: ਜੇ ਆਪਣੇ ਕੋਲ ਇੱਕ ਕੋਈ synchronized method
+  ਹੈ ਤੇ ਉਸ method ਦੇ ਵਿੱਚ 1000+ lines of code ਹੈ। ਜਦੋ computer 
+ ਉਸ method ਨੂੰ execute ਕਰੂਗਾ ਤਾਂ ਉਸਨੂੰ 5seconds ਲੱਗਣ ਗੇ। 
+ Thread1 execute ਕਰ ਰਿਹਾ ਤੇ Thread2 wait ਕਰ ਰਿਹਾ। ਪਰ ਉਸ 
+ synchronized method ਦੇ ਵਿੱਚ ਕੁੱਝ line ਦਾ ਛੋਟਾ ਜਿਹਾ code ਦਾ block ਹੈ
+ ਜਿਸਨੂੰ ਜੇ ਦੋਵੇ thread execute ਕਰਣਗੇ ਤਾਂ data inconsistancy ਦੀ
+ problem occur ਹੋਊਗੀ ਪਰ ਜੇ ਦੋਵੇ thread ਬਾਕੀ ਸਾਰਾ method execute 
+ ਕਰਨ ਤਾਂ (data inconsistancy ਦੀ problem occur ਨਹੀ ਹੋਣੀ) ਕੋਈ ਚੱਕਰ ਨਹੀ। 
+ ਇਸ example ਦੇ ਵਿੱਚ ਆਪਾ synchronized block ਦਾ use ਕਰਦੇ ਹਾਂ। 
+ synchronized block ਨਾਲ thread ਦਾ waiting time ਘੱਟ ਜਾਉਗਾ।
+----------------------------------------------------------
+⚫Syntax of synchronized block
+synchronized(object reference){}
+⚫ Synchronized block ਦੀ working same ਹੈ synchronized method ਦੇ।
+----------------------------------------------------------
+___________________________________
