@@ -1,0 +1,58 @@
+___________________________________
+🔴Inter-Thread communication
+___________________________________
+⚫what is inter thread communication.ਇਹ ਇੱਕ mechanism ਹੁੰਦਾ 
+ ਜਿਸਦੇ ਵਿੱਚ running thread ਨੇ ਜਿਹੜਾ(object ਦਾ) lock acquire 
+ ਕੀਤਾ ਉਹ release(ਛੱਡ) ਕਰ ਦਿੰਦਾ ਤੇ ਉਹ thread waiting ਜਾ pause state 
+ ਦੇ ਵਿੱਚ ਚਲਾ ਜਾਂਦਾ। ਦੂਜਾ thread lock acquire ਕਰ ਲੈਂਦਾ ਤੇ run ਕਰਦਾ ਰਹਿੰਦਾ।
+ ਜਿਵੇਂ ਹੀ ਦੂਜਾ thread complete ਹੋ ਜਾਂਦਾ ਉਹ notification ਦੇ ਦਿੰਦਾ ਜਿਹੜਾ
+ (ਪਹਿਲਾ thread) wait/pause ਸੀ ਉਸਨੂੰ ਵੀ ਤੂੰ ਦੁਬਾਰਾ ਤੋ invoke ਹੋ ਜਾ। 
+Object class ਦੇ 3 method ਨਾਲ ਆਪਾ inter thread communication
+ mechanism ਨੂੰ achieve ਕਰ ਦੇ ਹਾ:-
+(1) wait();
+(2) notify();
+(3) notifyAll();
+___________________________________
+1) wait: ਇਹ current thread ਨੂੰ pause/waiting state ਤੇ ਉਹ
+ lock release ਕਰ ਦਿੰਦਾ। ਉਹ thread ਓਦੋ ਤੱਕ wait ਕਰੂ ਜਦੋ ਤੱਕ ਦੂਜਾ thread
+ ਇਸ thread ਲਈ notify ਜਾ notifyAll method ਦਾ use ਨਹੀ ਕਰਦਾ 
+ ਇਸ object ਲਈ। ਇੱਕ ਗੱਲ ਹੋਰ ਵੀ wait method overload ਕੀਤਾ ਹੋਇਆ 
+ ਤੇ ਉਸਦੇ ਵਿੱਚ ਆਪਾ time ਦੇ ਕੇ ਉਹ thread ਓਨੇ time ਬਾਦ ਵੀ invoke ਹੋ 
+ ਸਕਦਾ ਹੈ ਜੇ ਦੂਜਾ thread ਪਹਿਲੇ thread ਲਈ notify ਜਾ notifyAll method
+ ਦਾ use ਨਹੀ ਕਰਦਾ।
+
+2) notify: ਇਹ ਜੋ thread wait ਕਰ ਰਿਹਾ ਉਸ ਵਾਲੇ thread ਨੂੰ ਤਾਂ ਇਹ 
+ invoke ਕਰਵਾ ਦਿਉਗਾ(wake up ਕਰਦੂ) ਤੇ ਖੁਦ object ਦੇ lock ਨੂੰ release 
+ ਕਰ ਦੇਵੇਗਾ। ਇਹ ਸਿਰਫ਼ ਇੱਕ thread ਨੂੰ wake ਕਰ ਪਾਊਗਾ।
+
+3) notifyAll: ਇਹ ਸਾਰੇ ਦੇ ਸਾਰੇ thread ਨੂੰ wake up ਕਰਦੂ ਤੇ ਖੁਦ object
+ ਦੇ lock ਨੂੰ release ਕਰਦੂ। ਇਹ ਸਾਰੇ thread ਨੂੰ wake up ਕਰ ਸਕਦਾ।
+NOTE: To call wait(), notify(), notifyAll() method on any 
+ object, thread should own the lock of that object
+ i.e. the thread should be inside synchronized area.
+---------------------------------------------------------- 
+
+----------------------------------------------------------
+
+class TotalEarning extends Thread {
+	int total = 0;
+	public void run() {
+		synchronized (this) {
+			for (int i = 0; i <= 4; i++) {
+				total = total + 66;
+			}
+			this.notify();
+		}
+	}
+}
+public class Main {
+	public static void main(String[] args) throws InterruptedException {
+		TotalEarning te = new TotalEarning();
+		te.start();
+		synchronized (te) {
+			te.wait();
+			System.out.println("Total is : " + te.total);
+		}
+	}
+}
+___________________________________
