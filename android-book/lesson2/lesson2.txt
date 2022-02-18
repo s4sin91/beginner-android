@@ -1,0 +1,334 @@
+___________________________________
+🔴Android and Model-View- Controller
+___________________________________
+⚫Overview: In this chapter, you are going to upgrade GeoQuiz 
+to present more than one question.
+----------------------------------------------------------
+To make this happen, ਆਪਾ ਆਪਣੇ  project ਵਿੱਚ question ਨਾਮ ਦੀ ਇੱਕ 
+class add ਕਰਾਗੇ। ਇਸ class ਦੀ  instance ਇੱਕ single true-false
+ question ਨੂੰ encapsulate ਕਰੇਗੀ। ਫਿਰ, ਆਪਾ MainActivity ਨੂੰ manage 
+ ਕਰਨ ਲਈ question object ਦੀ ਇੱਕ array ਬਣਾਵਾਗੇ। ਫਿਰ ਆਪਾ MainActivity
+ ਦਾ manage ਕਰਨ ਲਈ question object ਦੀ array create ਕਰਾਗੇ।
+___________________________________
+🔴Create a new class
+
+----------------------------------------------------------
+public class Question {
+private int mTextResId;
+private boolean mAnswerTrue;
+public Question(int textResId, boolean answerTrue) {
+mTextResId = textResId;
+mAnswerTrue = answerTrue;
+}
+}
+----------------------------------------------------------
+The Question class holds two pieces of data: the question 
+text and the question answer (true or false).
+Why is mTextResId an int and not a String? The mTextResId 
+variable will hold the resource ID (always an
+ int) of a
+ string resource for the question. You will create the 
+question string resources in a later
+ section.
+
+-----------
+example of string resource (in string.xml):
+ <string name="question_oceans">The Pacific Ocean is larger
+ than
+ the Atlantic Ocean.</string>
+---------------------------------------------------------- 
+
+🔴Generated getters and setters (Question.java)
+----------------------------------------------------------
+⚫ question Java code
+public class Question {
+private int mTextResId;
+private boolean mAnswerTrue;
+...
+public int getTextResId() {
+return mTextResId;
+}
+public void setTextResId(int textResId) {
+mTextResId = textResId;
+ }
+public boolean isAnswerTrue() {
+return mAnswerTrue;
+}
+public void setAnswerTrue(boolean answerTrue) {
+mAnswerTrue = answerTrue;
+}
+}
+----------------------------------------------------------
+ਹੁਣ question class complete ਹੋ ਗਈ। ਥੋੜੇ time ਬਾਅਦ ਆਪਾ question ਨੂੰ
+ MainActivity ਨਾਲ ਕੰਮ ਕਰਨ ਲਈ modify ਕਰਾਗੇ। ਚਲੋ ਦੇਖੀਏ ਵੀ ਇਹ ਸਾਰੇ ਟੁੱਕੜੇ
+ ਇਕੱਠੇ ਕਿਵੇ ਕੰਮ ਕਰਣਗੇ।MainActivity question objects ਦੀ array ਬਣਾਉਗੀ।
+ ਫਿਰ ਇਹ question display ਕਰਨ ਤੇ feedback provide ਕਰਨ ਲਈ 
+ 3 buttons ਤੇ TextView ਨਾਲ interact ਕਰੂਗੀ।
+___________________________________
+🔴MVC and android
+Notice that the objects in Figure 2.4 are separated into 
+three sections labeled Model, Controller, and
+ View.
+ Android applications are designed around an architecture 
+ called Model-View-Controller, or
+ MVC for short. 
+ In MVC, all objects in your application must be a model 
+ object, a view object, or a
+controller object.
+
+⚫
+⚫
+⚫Controller objects: ਇਹ view and model objects ਨੂੰ ਆਪਸ ਵਿੱਚ ਜੋੜਦੇ ਹਨ।
+ਇਹਨਾ ਕੋਲ application logic ਹੁੰਦਾ।ਇਹ view object ਦੁਆਰਾ start 
+ ਕੀਤੇ ਗਏ different events ਦਾ ਜਵਾਬ ਦਿੰਦੇ ਹੈ। ਇਹ data ਦੇ flow ਨੂੰ manage ਕਰਨ 
+ ਲਈ ਵੀ use ਹੁੰਦੇ।
+
+Figure 2.5 shows the flow of control between objects in response
+ to a user event, like a press of a
+ button. Notice that model and
+ view objects do not talk to each other directly; controllers sit 
+squarely
+ in the middle of everything, receiving messages from some
+ objects and dispatching instructions to
+others.
+
+___________________________________
+🔴Benefits of MVC 
+ਇੱਕ application ਉਦੋਂ ਤੱਕ features ਨੂੰ ਇਕੱਠਾ ਕਰ ਸਕਦੀ ਹੈ until it is too 
+ complicated to understand. separating code into
+classes helps you 
+ design and understand the application as a whole; you can think 
+ In terms of classes
+instead of individual variables and methods.
+
+Similarly, separating classes into model, view, and controller 
+ layers helps you design and understand
+ an application; you can
+ think in terms of layers instead of individual classes.
+
+Although GeoQuiz is not a complicated app, you can still see the 
+ benefits of keeping layers separate.
+In a moment, you are going to
+ update GeoQuiz’s view layer to include a Next button. When you do 
+ that,
+you will not need to remember a single thing about the Question
+ class you just created.
+ 
+MVC also makes classes easier to reuse. A class with restricted 
+responsibilities is more reusable
+ than one with its fingers in every pie.
+
+ਉਦਾਹਰਨ ਲਈ, ਆਪਣੀ model class , Question, ਇੱਕ true-false question ਨੂੰ display
+ ਕਰਨ ਲਈ ਵਰਤੇ ਜਾਣ ਵਾਲੇ widget ਬਾਰੇ ਕੁਝ ਨਹੀਂ ਜਾਣਦਾ ਹੈ।This makes it easy to use Question 
+throughout your app for different purposes. for example, if ਆਪਾ
+ ਇੱਕ ਵਾਰ ਵਿੱਚ ਸਾਰੇ question ਦੀ list display ਕਰਨਾ ਚਾਹੁੰਦੇ ਹਾ, ਤਾਂ ਆਪਾ ਉਹੀ object ਦਾ
+ use ਕਰ ਸਕਦੇ ਹਾ ਜੋ ਇੱਕ question display ਕਰਨ ਲਈ use ਕੀਤਾ ਸੀ।
+
+if you wanted to display a list of all the questions at once, you could use
+ the same object that you use here to display just one question at a time.
+___________________________________
+🔴Updating the View Layer
+ਹੁਣ ਜਦੋਂ ਕਿ ਤੁਹਾਨੂੰ MVC ਨਾਲ introduced ਕੀਤਾ ਗਿਆ ਹੈ, ਤੁਸੀਂ ਇੱਕ next button ਨੂੰ include 
+ ਕਰਨ ਲਈ MainActivity ਦੀ view layer ਨੂੰ update ਕਰਨ ਜਾ ਰਹੇ ਹੋ।
+
+android ਵਿੱਚ, view layer ਵਿੱਚ objects ਨੂੰ ਆਮ ਤੌਰ 'ਤੇ ਇੱਕ layout file ਦੇ ਅੰਦਰ
+ XML ਤੋਂ inflate ਕੀਤਾ ਜਾਂਦਾ ਹੈ। Project ਵਿੱਚ ਇਕੱਲੇ layout ਨੂੰ activity_main.xml 
+ ਵਿੱਚ define ਕੀਤਾ ਗਿਆ ਹੈ। 
+So the changes you need to make to the view layer are:
+Remove the android:text attribute from the TextView. You no longer 
+want a hard-coded question
+ to be part of its definition.
+Give the TextView an android:id attribute. This widget will need a 
+ resource ID so that you can
+ set its text in QuizActivity’s code.
+Add the new Button widget as a child of the root LinearLayout.
+Return to activity_main.xml and make it happen
+⚫string.xml ਦੇ ਵਿੱਚ ਵੀ string create ਕਰਣੀਆ for questions.
+🔵That is all for now for project ਦੀ view layer. Time to wire everything up in your controller class,
+MainActivity.
+___________________________________
+⚫Updating the Controller Layer.
+
+In the previous chapter, project ਦੇ ਇੱਕ controller, MainActivity
+ ਵਿੱਚ ਬਹੁਤ ਕੁਝ ਨਹੀਂ ਹੋ ਰਿਹਾ ਸੀ। ਇਹ activity_main.xml ਵਿੱਚ defined 
+ layout display ਕਰਦਾ ਸੀ ਤੇ listener ਨੂੰ 2 button 'ਤੇ set ਕਰਕੇ 
+ ਤੇ ਉਨ੍ਹਾਂ ਨੂੰ Toast ਬਣਾ ਦਿੰਦਾ ਸੀ।
+
+ ਹੁਣ ਜਦੋਂ ਕਿ ਆਪਣੇ ਕੋਲ retrieve ਕਰਨ ਤੇ display ਕਰਨ ਲਈ ਕਈ questions ਹੈ,
+  MainActivity ਨੂੰ project ਦੇ model ਅਤੇ layer ਨੂੰ ਜੋੜਨ ਲਈ
+ hard work ਕਰਨਾ ਪਊਗਾ। 
+----------------------------------------------------------
+code this in MainActivity.java।
+
+public class QuizActivity extends AppCompatActivity {
+private Button mTrueButton;
+private Button mFalseButton;
+private Button mNextButton;
+private TextView mQuestionTextView;
+private Question[] mQuestionBank = new Question[] {
+new Question(R.string.question_oceans, true),
+new Question(R.string.question_mideast, false),
+new Question(R.string.question_africa, false),
+new Question(R.string.question_americas, true),
+new Question(R.string.question_asia, true),
+};
+private int mCurrentIndex = 0;
+...
+----------------------------------------------------------
+Here you call the Question constructor several times and
+ create an array of Question objects.
+(In a more complex project, 
+this array would be created and stored elsewhere. 
+ In later apps, you will
+see better options for storing model 
+data. For now, we are keeping it simple and just creating
+ the
+array within your controller.)
+
+ਆਪਾ screen 'ਤੇ questions ਦੀ ਪਰੇਡ get ਕਰਨ ਲਈ question ਵਿੱਚ 
+ mQuestionBank, mCurrentIndex, ਅਤੇ accessor method ਦਾ use ਕਰ ਰਹੇ ਹਾ।
+first, get a reference for the TextView and set its text to the
+ question at the current index
+----------------------------------------------------------
+mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
+int question = mQuestionBank[mCurrentIndex].getTextResId();
+mQuestionTextView.setText(question);
+----------------------------------------------------------
+⚫Save your files and check for any errors. Then run GeoQuiz.
+ You should see the first question in the
+ array appear in the
+ TextView.Now let’s see about the Next button. First, get a 
+reference to the button. Then set a
+View.OnClickListener on it. This listener will increment the
+ index and update the TextView’s text.
+⚫Wiring up the new button (MainActivity.java)
+----------------------------------------------------------
+
+mNextButton = (Button) findViewById(R.id.next_button);
+mNextButton.setOnClickListener(new View.OnClickListener() {
+@Override
+public void onClick(View v) {
+mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
+int question = mQuestionBank[mCurrentIndex].getTextResId();
+mQuestionTextView.setText(question);
+}
+});
+----------------------------------------------------------
+⚫Encapsulating with updateQuestion()(MainActivity.java)
+----------------------------------------------------------
+public class QuizActivity extends AppCompatActivity {
+...
+private void updateQuestion() {
+int question = mQuestionBank[mCurrentIndex].getTextResId();
+mQuestionTextView.setText(question);
+}
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+...
+mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
+int question = mQuestionBank[mCurrentIndex].getTextResId();
+mQuestionTextView.setText(question);
+...
+mNextButton.setOnClickListener(new View.OnClickListener() {
+@Override
+public void onClick(View v) {
+mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
+int question = mQuestionBank[mCurrentIndex].getTextResId();
+mQuestionTextView.setText(question);
+updateQuestion();
+}
+});
+updateQuestion();
+...
+}
+}
+__________________________________
+Run GeoQuiz and test your new Next button.
+
+Now that you have the questions behaving appropriately, 
+it is time to turn to the answers. At the
+ moment, GeoQuiz
+ thinks that the answer to every question is “False.” 
+Let’s rectify that. Here again,
+ you will implement a 
+private method to encapsulate code rather than writing 
+similar code in two
+ places.
+---------------------------------------------------------
+The method that you are going to add to QuizActivity is:
+private void checkAnswer(boolean userPressedTrue)
+---------------------------------------------------------
+This method will accept a boolean variable that identifies 
+whether the user pressed True or False. Then,
+ it will check
+ the user’s answer against the answer in the current Question 
+object. Finally, after
+ determining whether the user answered
+ correctly, it will make a Toast that displays the appropriate
+ 
+ message to the user.
+ In QuizActivity.java, add the
+ implementation of checkAnswer(boolean)
+__________________________________
+⚫Adding checkAnswer(boolean) (QuizActivity.java)
+---------------------------------------------------------
+public class QuizActivity extends AppCompatActivity {
+private void updateQuestion() {
+int question = mQuestionBank[mCurrentIndex].getTextResId();
+mQuestionTextView.setText(question);
+}
+private void checkAnswer(boolean userPressedTrue) {
+boolean answerIsTrue = mQuestionBank[mCurrentIndex].isAnswerTrue();
+int messageResId = 0;
+if (userPressedTrue == answerIsTrue) {
+messageResId = R.string.correct_toast;
+} else {
+messageResId = R.string.incorrect_toast;
+}
+Toast.makeText(this, messageResId, Toast.LENGTH_SHORT)
+.show();
+}
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+...
+}
+}
+---------------------------------------------------------
+Within the button’s listeners, call checkAnswer(boolean)
+__________________________________
+⚫Calling checkAnswer(boolean) (QuizActivity.java)
+----------------------------------------------------------
+public class QuizActivity extends AppCompatActivity {
+...
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+...
+mTrueButton = (Button) findViewById(R.id.true_button);
+mTrueButton.setOnClickListener(new View.OnClickListener() {
+@Override
+public void onClick(View v) {
+Toast.makeText(QuizActivity.this,
+R.string.incorrect_toast,
+Toast.LENGTH_SHORT).show();
+checkAnswer(true);
+}
+});
+mFalseButton = (Button) findViewById(R.id.false_button);
+mFalseButton.setOnClickListener(new View.OnClickListener() {
+@Override
+public void onClick(View v) {
+Toast.makeText(QuizActivity.this,
+R.string.correct_toast,
+Toast.LENGTH_SHORT).show();
+checkAnswer(false);
+}
+});
+mNextButton = (Button) findViewById(R.id.next_button);
+...
+}
+}
+----------------------------------------------------------
+
+___________________________________
+⚫GeoQuiz is ready to run again. Let’s get it running on a real device. 
+
