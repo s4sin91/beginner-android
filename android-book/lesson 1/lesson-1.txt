@@ -1,0 +1,154 @@
+
+Activity_main.xml ਵਿੱਚ XMLelements ਤੋ View object ਕਿਵੇਂ ਬਣਦੇ ਹਨ? 
+ ਜਵਾਬ MainActivity Class ਵਿੱਚ ਸ਼ੁਰੂ ਹੁੰਦਾ ਹੈ।ਜਦੋਂ ਆਪਾ ਕੋਈ ਵੀ project
+ ਬਣਾਉਂਦੇ ਹਾਂ ਤਾਂ, ਜੋ MainActivity ਹੈ ਉਹ activity ਦੀ ਹੀ sub-class ਹੈ। 
+----------------------------------------------------------
+AppCompatActivity ਦੀ details lesson 13 ਦੇ ਵਿੱਚ ਹੈ।
+(AppCompatActivity)This file has three Activity methods: 
+onCreate(Bundle), onCreateOptionsMenu(Menu), and
+onOptionsItemSelected(MenuItem)
+Ignore onCreateOptionsMenu(Menu) and onOptionsItemSelected(MenuItem) 
+for now. lesson 13 ਦੇ ਵਿੱਚ menus ਦੀ details ਹੈ।
+----------------------------------------------------------
+
+⚫The onCreate(Bundle) method ਨੂੰ ਉਸ time call ਕੀਤਾ ਜਾਂਦਾ ਜਦੋ instance
+ create ਹੁੰਦਾ activity ਦੀ sub-class(ਮਤਲਬ MainActivity ਦਾ instance) ਦਾ ।
+----------------------------------------------------------
+ਜਦੋਂ ਕੋਈ Activity ਬਣ ਜਾਂਦੀ ਹੈ, ਤਾਂ ਇਸਨੂੰ manage ਕਰਨ ਲਈ ਇੱਕ user interface
+ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ। activity ਨੂੰ ਇਸਦਾ user interface ਦੇਣ ਲਈ ਆਪਾ ਇਸ method ਦਾ use ਕਰਦੇ ਹਾਂ 
+public void setContentView(int layoutResID);
+----------------------------------------------------------
+ਇਹ method layout ਨੂੰ inflate ਕਰਦਾ ਹੈ ਅਤੇ ਇਸਨੂੰ(layout ਨੂੰ) screen 'ਤੇ
+ ਰੱਖਦੀ ਹੈ। ਜਦੋਂ layout inflate ਕੀਤਾ ਜਾਂਦਾ ਹੈ, layout file ਵਿੱਚ ਹਰੇਕ
+ widget ਨੂੰ ਇਸਦੇ attributes ਨਾਲ instantiate ਕੀਤਾ ਜਾਂਦਾ ਹੈ। ਆਪਾ ਜਿਹੜਾ
+ layout inflate ਕਰਨਾ ਉਸ layout ਦੀ resource id pass ਕਰਦੇ ਹਾਂ।
+----------------------------------------------------------
+⚫ Real Example: 
+setContentView(R.layout.activity_main);
+----------------------------------------------------------
+🔴Resources and resource IDs
+
+layout ਇੱਕ resource ਹੈ। resource application ਦਾ ਇੱਕ ਟੁਕੜਾ(piece) ਹੈ
+ ਜੋ code ਨਹੀਂ ਹੈ - eg image files, audio files, xml files।
+ code ਦੇ ਵਿੱਚ ਇੱਕ resource ਨੂੰ access ਕਰਨ ਲਈ ਆਪਾ ਉਸਦੀ resource ID
+ ਦਾ use ਕਰਦੇ ਹਾ। layout ਦੀ resource ID ਹੈ R.id.activity_main ।
+ਇਹ resource id R.java file ਦੇ ਵਿੱਚ store ਹੁੰਦੀ ਹੈ।
+Android ਨੇ ਪੂਰੇ layout ਅਤੇ ਹਰੇਕ string ਲਈ ਇੱਕ resource ID ਤਿਆਰ ਕੀਤੀ, 
+ ਪਰ ਇਸਨੇ activity_main.xml ਵਿੱਚ individual widget ਲਈ id ਤਿਆਰ ਨਹੀਂ ਕੀਤੀ।
+ ਹਰ widget ਨੂੰ resource ID ਦੀ ਲੋੜ ਨਹੀਂ ਹੁੰਦੀ  ਹੈ। id generate ਕਰਨ ਲਈ
+ android:id ਦਾ use ਕਰਦੇ ਹਾ widget ਦੇ ਵਿੱਚ। plus symbol+ indicate ਕਰਦਾ ਕਿ
+ ਇਹ ਇੱਕ new resource id ਹੈ ਤੇ ਇਹ R.java file ਦੇ ਵਿੱਚ create ਹੋ ਜਾਉਗੀ 
+ (ਜੋ integer ਹੋਊ)। resource id ਦੇਣ ਤੋ ਬਾਅਦ ਆਪਾ widgets ਨੂੰ MainActivity
+ ਦੇ ਵਿੱਚ access ਕਰ ਸਕਦੇ ਹਾਂ।
+
+🔴Getting references to widgets
+----------------------------------------------------------
+public View findViewById(int id)
+ਇਸ method ਨਾਲ ਆਪਾ ਕਿਸੇ activity ਦੇ ਵਿੱਚ inflated widget ਦਾ 
+reference get ਕਰ ਸਕਦੇ ਹਾਂ।
+ਇਹ method widget ਦੀ ਇੱਕ resource ID ਨੂੰ accept ਕਰਦੀ ਹੈ ਅਤੇ ਇੱਕ 
+ View object return ਕਰਦੀ ਹੈ। MainActivity.java ਵਿੱਚ,
+ inflated objects ਨੂੰ retrieve ਕਰਨ ਲਈ ਆਪਣੇ Buttons ਦੀ 
+ resource ID ਦਾ use ਕਰਦੇ ਹੈ।   Note that you must cast the
+ returned View to Button before assigning it.
+some details here of this process:
+https://stackoverflow.com/questions/3477422/what-does-layoutinflater-in-android-do
+___________________________________
+🔴Setting listeners
+
+android application ਆਮ ਤੌਰ 'ਤੇ event driven ਹੁੰਦੀਆਂ ਹਨ। 
+ unlike Command line program ਜਾਂ scrips (ਦੇ ਉਲਟ,[unlike ਦਾ meaning]),
+ event driven application start ਹੁੰਦੀਆਂ ਹਨ ਅਤੇ ਫਿਰ ਕਿਸੇ event ਦੀ 
+ wait ਕਰਦੀਆਂ ਹਨ, ਜਿਵੇਂ ਕਿ user ਇੱਕ button press ਕਰਦਾ ਹੈ। events ਨੂੰ
+ OS ਜਾਂ ਕਿਸੇ ਹੋਰ application ਦੁਆਰਾ ਵੀ ਸ਼ੁਰੂ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ, ਪਰ 
+ user-initiated events ਸਭਤੋ clear/obvious ਹੈ।
+
+ਜਦੋਂ ਆਪਣੀ application ਕਿਸੇ specific event ਦੀ wait ਕਰ ਰਹੀ ਹੈ, 
+ ਤਾਂ ਅਸੀਂ ਕਹਿੰਦੇ ਹਾਂ ਕਿ ਇਹ ਉਸ event ਲਈ "ਸੁਣ ਰਹੀ ਹੈ (listen for)"। 
+ ਜਿਸ object ਨੂੰ ਆਪਾ ਕਿਸੇ event ਦਾ ਜਵਾਬ ਦੇਣ ਲਈ create ਕੀਤਾ ਹੈ, 
+ ਉਸਨੂੰ listener ਕਿਹਾ ਜਾਂਦਾ ਹੈ, ਅਤੇ listener ਉਸ event ਲਈ ਇੱਕ 
+ listener interface implement  ਕਰਦਾ ਹੈ।
+
+Android SDK ਵੱਖ-ਵੱਖ events ਲਈ listener interface ਦੇ ਨਾਲ ਆਉਂਦਾ ਹੈ,
+ ਇਸ ਲਈ ਆਪਾ ਨੂੰ ਲਿਖਣ ਦੀ ਲੋੜ ਨਹੀਂ ਹੈ। ਆਪਣੇ case ਦੇ ਵਿੱਚ, ਜਿਸ event ਨੂੰ ਆਪਾ
+ listen ਕਰਨਾ ਹੈ ਉਹ ਇੱਕ button ਹੈ ਵੀ ਉਹ press ਹੋਇਆ ਤਾਂ ਕਰਕੇ ਆਪਾ ਇਹ
+ View.OnClickListener interface ਨੂੰ implement ਕਰਾਗੇ।
+----------------------------------------------------------
+mTrueButton = (Button) findViewById(R.id.true_button);
+mTrueButton.setOnClickListener(new View.OnClickListener() {
+@Override
+public void onClick(View v) {
+// Does nothing yet, but soon!
+}
+});
+ਇਸ example ਦੇ ਵਿੱਚ:- ਆਪਾ set ਕੀਤਾ listener ਤਾ ਜੋ ਉਹ ਆਪਾ ਨੂੰ inform ਕਰ
+ ਸਕੇ ਵੀ button press ਹੋਇਆ। ਇਹ setOnClickListener(OnClickListener) 
+ method listener ਨੂੰ argument ਲੈਂਦਾ। especially ਇਹ ਇੱਕ object ਲੈਂਦਾ ਜੋ
+ OnClickListener ਨੂੰ implement ਕਰਦਾ।
+----------------------------------------------------------
+
+🔴Using anonymous inner classes
+
+ਇਹ listener implement ਕੀਤਾ ਗਿਆ as an anonymous inner class.
+ The syntax is a little tricky, but it helps to
+remember that everything within the outermost set of parentheses
+ is passed into setOnClickListener(OnClickListener) ।
+ ਇਹਨਾਂ brackets ਦੇ ਵਿੱਚ , ਆਪਾ ਇੱਕ new, nameless class create ਕੀਤੀ ਹੈ 
+ ਤੇ ਉਸਦੀ ਸਾਰੀ implementation paas ਵੀ pass ਕੀਤੀ ਹੈ।
+----------------------------------------------------------
+mTrueButton.setOnClickListener(new View.OnClickListener() {
+@Override
+public void onClick(View v) {
+// Does nothing yet, but soon!
+}
+});
+----------------------------------------------------------
+ਇਸ book ਦੇ ਸਾਰੇ listener ਨੂੰ anonymous inner class ਵਜੋਂ implement
+ ਕੀਤਾ ਜਾਵੇਗਾ। ਇਸ ਤਰ੍ਹਾਂ ਕਰਨ ਨਾਲ listener method ਦੀ implementation 
+ ਉੱਥੇ ਹੀ ਕੀਤੀ ਜਾਂ ਸਕਦੀ ਹੈ ਜਿੱਥੇ ਉਸਦੀ ਲੋੜ ਹੈ bcoz class ਇੱਕ ਥਾਂ ਤੇ use ਕੀਤੀ 
+ ਜਾਉਗੀ ਤੇ ਇਸ ਨਾਲ overrhead ਵੀ ਘੱਟ ਜਾਊਗਾ। 
+anonymous class implement ਕਰਦੀ ਹੈ OnClickListener ਨੂੰ। 
+ਇਸ (interface) ਦੇ ਵਿੱਚ ਇੱਕ sole method onClick(View) ਹੁੰਦਾ 
+ਆਪਾ ਨੂੰ implement ਕਰਨਾ ਪੈਂਦਾ (but for now ਆਪਾ ਉਸਨੂੰ ਖਾਲੀ ਵੀ ਛੱਡ ਸਕਦੇ) ਹੈ।
+listener ਆਪਣੇ ਤੋਂ ਚਾਹੁੰਦਾ ਹੈ ਵੀ ਆਪਾ ਉਸਨੂੰ implement ਕਰੀਏ ਪਰ ਇਸਨੂੰ 
+ਕਿਵੇਂ implement ਕਰਨਾ ਇਸ ਬਾਰੇ ਕੋਈ rule ਨਹੀ ਬਣਿਆ।
+___________________________________
+🔴Toast method
+___________________________________
+🔴 Android build process
+
+By now, you probably have some burning questions about how the
+ Android build process works. You have already seen that
+ Android Studio builds your project automatically as you modify 
+ it rather than on command. During the build process, the
+ Android tools take your resources, code, and the 
+ AndroidManifest.xml file (which contains meta-data about the application) 
+ and turn them into an .apk file. This file is then signed with 
+ a debug key, which allows it to run on the emulator.
+ (To distribute your .apk to the masses, you have to sign it with 
+ a release key. There is more information about this process
+ in the Android developer documentation at
+ http://developer.android.com/tools/publishing/preparing.html.)
+
+activity_main.xml ਦੇ content ਇੱਕ application ਵਿੱਚ view object 
+ ਵਿੱਚ ਕਿਵੇਂ ਬਦਲਦੇ ਹੈ? As part of the build process, aapt
+ (Android Asset Packaging Tool) compile ਕਰਦਾ layout file 
+ resources ਨੂੰ more compact format ਦੇ ਵਿੱਚ। ਇਹਨਾਂ compiled
+ resource files ਨੂੰ .apk file ਵਿੱਚ pack ਕੀਤਾ ਜਾਂਦਾ ਹੈ।
+ ਫਿਰ, ਜਦੋਂ MainActivity ਦੇ onCreate(…) method ਵਿੱਚ setContentView(…)
+ ਨੂੰ call ਕੀਤਾ ਜਾਂਦਾ ਹੈ, MainActivity layout file ਦੇ ਵਿੱਚ defined
+ ਹਰੇਕ view object ਨੂੰ instantiate ਕਰਨ ਲਈ LayoutInflater
+ class ਦਾ use ਕਰਦੀ ਹੈ।
+
+ਆਪਾ XML ਵਿੱਚ define ਕਰਨ ਦੀ ਬਜਾਏ activity ਵਿੱਚ ਆਪਣੇ
+ view classes ਨੂੰ programmatically ਰੂਪ ਵਿੱਚ ਵੀ ਬਣਾ ਸਕਦੇ ਹਾ। 
+ But there are benefits to separating your
+ presentation from the logic of the application। 
+The main one is taking advantage of configuration
+ changes built into the SDK, which you will learn more
+about in Chapter 3.)
+___________________________________
+🔴 Android build tools
+___________________________________
+
+
