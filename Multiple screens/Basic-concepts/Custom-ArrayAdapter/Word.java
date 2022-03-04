@@ -1,16 +1,16 @@
-package com.mycompany.state;
+package com.b4brar.puntrans;
 
-public class Word {
-	private String mPunjabi;
-	private String mEnglish;
-	Word(String punjabi, String english){
-		mPunjabi = punjabi;
-		mEnglish = english;
-	}
-	public String getPunjabiText(){
-		return mPunjabi;
-	}
-    public String getEnglishText(){
+public class Akkhar {
+   private String mPunjabi;
+   private String mEnglish;
+   Akkhar(String punjabi, String english){
+	  mPunjabi = punjabi;
+	  mEnglish = english;
+   }
+   public String getPunjabi(){
+	   return mPunjabi;
+   }
+	public String getEnglish(){
 		return mEnglish;
 	}
 }
