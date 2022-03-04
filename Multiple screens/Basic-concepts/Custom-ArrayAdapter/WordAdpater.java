@@ -28,3 +28,4 @@ public class AkkharAdapter extends ArrayAdapter<Akkhar>{
 	}
     
 }
+//****/
