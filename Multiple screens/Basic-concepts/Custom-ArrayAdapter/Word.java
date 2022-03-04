@@ -1,4 +1,4 @@
-package com.b4brar.puntrans;
+package com.*.*;
 
 public class Akkhar {
    private String mPunjabi;
