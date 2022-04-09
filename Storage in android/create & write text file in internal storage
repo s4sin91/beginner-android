@@ -1,0 +1,83 @@
+package com.mycompany.myStorageApp;
+
+import android.os.Bundle;
+
+import android.support.v7.app.AppCompatActivity;
+
+import android.view.View;
+
+import android.widget.EditText;
+
+import android.widget.TextView;
+
+import android.widget.Toast;
+
+import java.io.FileNotFoundException;
+
+import java.io.FileOutputStream;
+
+import java.io.IOException;
+
+public class MainActivity extends AppCompatActivity {
+
+	static TextView pathView;	private final String FILE_NAME="my_file.txt";
+
+    @Override
+
+    protected void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_main);
+
+		String path ="Absolute path is: " + getFilesDir().getAbsolutePath();
+
+		pathView = (TextView)findViewById(R.id.pathTextView);
+
+		pathView.setText(path + "\n");
+
+	}
+
+	public void createFile(View view) {
+
+		EditText editText = (EditText)findViewById(R.id.editTextSave);
+
+		String data = editText.getText().toString();
+
+		FileOutputStream outputStream = null;
+
+		try {
+
+// 2 mode ਹੁੰਦੇ ਹੈ, MODE_PRIVATE & MODE_APPEND, MODE_APPEND ਇਹ append ਕਰ ਦਿੰਦਾ।
+
+			outputStream = openFileOutput(FILE_NAME, MODE_APPEND);
+
+			outputStream.write(data.getBytes());
+
+			outputStream.flush();
+
+			String path ="Absolute path is: " + getFilesDir().getAbsolutePath();
+
+			pathView.setText(path + "\nFile written");
+
+		} catch (FileNotFoundException e) {
+
+		} catch (IOException e) {} finally {
+
+			if (outputStream != null) {
+
+				Toast.makeText(this, "File written", Toast.LENGTH_LONG).show();
+
+				try {
+
+					outputStream.close();
+
+				} catch (IOException e) {}
+
+			}
+
+		}
+
+	}
+
+}
